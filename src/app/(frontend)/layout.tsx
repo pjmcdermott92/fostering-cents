@@ -1,5 +1,5 @@
 import React from 'react';
-import { APP_NAME, APP_DESCRIPTION, SERVER_URL } from '@/lib/contants';
+import { APP_NAME, APP_DESCRIPTION, SERVER_URL } from '@/lib/constants';
 import './styles.css';
 import { PrivacyProvider } from '@/providers/PrivacyProvider';
 import { Providers } from '@/providers';
