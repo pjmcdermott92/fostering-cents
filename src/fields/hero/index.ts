@@ -58,14 +58,23 @@ export const hero: Field = {
       type: 'upload',
       relationTo: 'media',
       required: true,
+      admin: {
+        condition: (_, siblingData) => siblingData.type == 'default',
+      },
     },
     richText({
       name: 'heroImageCaption',
       label: 'Hero Image Caption',
+      admin: {
+        condition: (_, siblingData) => siblingData.type == 'default',
+      },
     }),
     richText({
       label: 'Additional Hero Content',
       required: false,
+      admin: {
+        condition: (_, siblingData) => siblingData.type == 'default',
+      },
     }),
   ],
 };

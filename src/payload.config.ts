@@ -26,6 +26,8 @@ import { BlogContent } from './blocks/BlogContent';
 import { ReusableContent } from './collections/ReusableContent';
 import { ReusableContentBlock } from './blocks/ReusableContent';
 import { LatestArticles } from './blocks/LatestArticles';
+import { MainNavigation } from './globals/MainNavigation';
+import { FooterLinks } from './globals/FooterLinks';
 
 const filename = fileURLToPath(import.meta.url);
 const dirname = path.dirname(filename);
@@ -39,6 +41,7 @@ export default buildConfig({
   },
   blocks: [Content, BlogContent, LatestArticles, ReusableContentBlock],
   collections: [Articles, Pages, Topics, Users, Media, ReusableContent],
+  globals: [MainNavigation, FooterLinks],
   editor: lexicalEditor({
     features: ({ defaultFeatures }) => [
       ...defaultFeatures.filter((feature) => feature.key !== 'link'),
