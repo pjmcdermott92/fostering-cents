@@ -65,18 +65,35 @@ export interface Config {
   auth: {
     users: UserAuthOperations;
   };
-  blocks: {};
+  blocks: {
+    content: Content;
+    blogContent: BlogContent;
+    latestArticles: LatestArticles;
+    reusableContentBlock: ReusableContentBlock;
+  };
   collections: {
+    articles: Article;
+    pages: Page;
+    topics: Topic;
     users: User;
     media: Media;
+    'reusable-content': ReusableContent;
     'payload-locked-documents': PayloadLockedDocument;
     'payload-preferences': PayloadPreference;
     'payload-migrations': PayloadMigration;
   };
-  collectionsJoins: {};
+  collectionsJoins: {
+    topics: {
+      articles: 'articles';
+    };
+  };
   collectionsSelect: {
+    articles: ArticlesSelect<false> | ArticlesSelect<true>;
+    pages: PagesSelect<false> | PagesSelect<true>;
+    topics: TopicsSelect<false> | TopicsSelect<true>;
     users: UsersSelect<false> | UsersSelect<true>;
     media: MediaSelect<false> | MediaSelect<true>;
+    'reusable-content': ReusableContentSelect<false> | ReusableContentSelect<true>;
     'payload-locked-documents': PayloadLockedDocumentsSelect<false> | PayloadLockedDocumentsSelect<true>;
     'payload-preferences': PayloadPreferencesSelect<false> | PayloadPreferencesSelect<true>;
     'payload-migrations': PayloadMigrationsSelect<false> | PayloadMigrationsSelect<true>;
@@ -115,10 +132,270 @@ export interface UserAuthOperations {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "content".
+ */
+export interface Content {
+  contentFields: {
+    settings: {
+      bgType?: ('transparent' | 'solid' | 'image') | null;
+      /**
+       * Choose a fall-back color for background image
+       */
+      bgColor?: ('primary' | 'accentLight' | 'accentDark') | null;
+      bgImage?: (string | null) | Media;
+      containerWidth?: ('normal' | 'narrow' | 'wide') | null;
+      theme?: ('light' | 'dark') | null;
+      padding: {
+        top: 'hero' | 'large' | 'small' | 'extraLarge' | 'underlay';
+        bottom: 'hero' | 'large' | 'small' | 'extraLarge';
+      };
+      useLeadingContent?: boolean | null;
+      leadingContent?: {
+        root: {
+          type: string;
+          children: {
+            type: string;
+            version: number;
+            [k: string]: unknown;
+          }[];
+          direction: ('ltr' | 'rtl') | null;
+          format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+          indent: number;
+          version: number;
+        };
+        [k: string]: unknown;
+      } | null;
+      layout?: ('oneColumn' | 'twoColumns' | 'twoThirdsOneThird' | 'oneThirdTwoThirds') | null;
+      columnOne: {
+        root: {
+          type: string;
+          children: {
+            type: string;
+            version: number;
+            [k: string]: unknown;
+          }[];
+          direction: ('ltr' | 'rtl') | null;
+          format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+          indent: number;
+          version: number;
+        };
+        [k: string]: unknown;
+      };
+      columnTwo?: {
+        root: {
+          type: string;
+          children: {
+            type: string;
+            version: number;
+            [k: string]: unknown;
+          }[];
+          direction: ('ltr' | 'rtl') | null;
+          format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+          indent: number;
+          version: number;
+        };
+        [k: string]: unknown;
+      } | null;
+    };
+  };
+  id?: string | null;
+  blockName?: string | null;
+  blockType: 'content';
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "media".
+ */
+export interface Media {
+  id: string;
+  alt: string;
+  caption?: string | null;
+  updatedAt: string;
+  createdAt: string;
+  url?: string | null;
+  thumbnailURL?: string | null;
+  filename?: string | null;
+  mimeType?: string | null;
+  filesize?: number | null;
+  width?: number | null;
+  height?: number | null;
+  focalX?: number | null;
+  focalY?: number | null;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "blogContent".
+ */
+export interface BlogContent {
+  richText: {
+    root: {
+      type: string;
+      children: {
+        type: string;
+        version: number;
+        [k: string]: unknown;
+      }[];
+      direction: ('ltr' | 'rtl') | null;
+      format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+      indent: number;
+      version: number;
+    };
+    [k: string]: unknown;
+  };
+  id?: string | null;
+  blockName?: string | null;
+  blockType: 'blogContent';
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "latestArticles".
+ */
+export interface LatestArticles {
+  latestArticlesBlockFields: {
+    settings: {
+      bgType?: ('transparent' | 'solid' | 'image') | null;
+      /**
+       * Choose a fall-back color for background image
+       */
+      bgColor?: ('primary' | 'accentLight' | 'accentDark') | null;
+      bgImage?: (string | null) | Media;
+      containerWidth?: ('normal' | 'narrow' | 'wide') | null;
+      theme?: ('light' | 'dark') | null;
+      padding: {
+        top: 'hero' | 'large' | 'small' | 'extraLarge' | 'underlay';
+        bottom: 'hero' | 'large' | 'small' | 'extraLarge';
+      };
+      displayShowAllLink?: boolean | null;
+      /**
+       * Select any articles that you don't want to show
+       */
+      articlesToExclude?: (string | null) | Article;
+    };
+  };
+  id?: string | null;
+  blockName?: string | null;
+  blockType: 'latestArticles';
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "articles".
+ */
+export interface Article {
+  id: string;
+  title: string;
+  featuredImage?: (string | null) | Media;
+  topic: string | Topic;
+  /**
+   * Type a tag and press enter
+   */
+  tags?: string[] | null;
+  excerpt: {
+    root: {
+      type: string;
+      children: {
+        type: string;
+        version: number;
+        [k: string]: unknown;
+      }[];
+      direction: ('ltr' | 'rtl') | null;
+      format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+      indent: number;
+      version: number;
+    };
+    [k: string]: unknown;
+  };
+  content: (BlogContent | ReusableContentBlock)[];
+  slug?: string | null;
+  /**
+   * Set this if the original version of the article is published elsewhere.
+   */
+  canonicalUrl?: string | null;
+  authorType: 'team' | 'guest';
+  author?: (string | null) | User;
+  guestAuthor?: string | null;
+  /**
+   * Website URL or social media page
+   */
+  authorUrl?: string | null;
+  relatedArticles?: (string | Article)[] | null;
+  updatedAt: string;
+  createdAt: string;
+  _status?: ('draft' | 'published') | null;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "topics".
+ */
+export interface Topic {
+  id: string;
+  name: string;
+  slug: string;
+  icon: string | Media;
+  description: string;
+  /**
+   * When checked, category shows in navigation
+   */
+  isPublic?: boolean | null;
+  articles?: {
+    docs?: (string | Article)[];
+    hasNextPage?: boolean;
+    totalDocs?: number;
+  };
+  updatedAt: string;
+  createdAt: string;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "reusableContentBlock".
+ */
+export interface ReusableContentBlock {
+  reusableContentBlockFields: {
+    settings: {
+      bgType?: ('transparent' | 'solid' | 'image') | null;
+      /**
+       * Choose a fall-back color for background image
+       */
+      bgColor?: ('primary' | 'accentLight' | 'accentDark') | null;
+      bgImage?: (string | null) | Media;
+      containerWidth?: ('normal' | 'narrow' | 'wide') | null;
+      theme?: ('light' | 'dark') | null;
+      padding: {
+        top: 'hero' | 'large' | 'small' | 'extraLarge' | 'underlay';
+        bottom: 'hero' | 'large' | 'small' | 'extraLarge';
+      };
+      reusableContent: string | ReusableContent;
+      /**
+       * A custom ID that can be used to target this block is CSS or JavaScript.
+       */
+      customId?: string | null;
+    };
+  };
+  id?: string | null;
+  blockName?: string | null;
+  blockType: 'reusableContentBlock';
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "reusable-content".
+ */
+export interface ReusableContent {
+  id: string;
+  title: string;
+  layout: (BlogContent | Content)[];
+  updatedAt: string;
+  createdAt: string;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "users".
  */
 export interface User {
   id: string;
+  firstName: string;
+  lastName: string;
+  displayName: string;
+  photo?: (string | null) | Media;
+  roles: ('admin' | 'public')[];
   updatedAt: string;
   createdAt: string;
   email: string;
@@ -139,22 +416,84 @@ export interface User {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "media".
+ * via the `definition` "pages".
  */
-export interface Media {
+export interface Page {
   id: string;
-  alt: string;
+  title: string;
+  /**
+   * Prevent indexing in search engines
+   */
+  noIndex?: boolean | null;
+  slug?: string | null;
+  hero: {
+    type: 'default' | 'home';
+    mainHeading: string;
+    subHeading?: string | null;
+    heroBg?: (string | null) | Media;
+    /**
+     * Add upto 3 Call To Action buttons
+     */
+    links?:
+      | {
+          link: {
+            type?: ('reference' | 'custom') | null;
+            newTab?: boolean | null;
+            reference?:
+              | ({
+                  relationTo: 'pages';
+                  value: string | Page;
+                } | null)
+              | ({
+                  relationTo: 'articles';
+                  value: string | Article;
+                } | null)
+              | ({
+                  relationTo: 'topics';
+                  value: string | Topic;
+                } | null);
+            url?: string | null;
+            label: string;
+          };
+          id?: string | null;
+        }[]
+      | null;
+    heroImage: string | Media;
+    heroImageCaption: {
+      root: {
+        type: string;
+        children: {
+          type: string;
+          version: number;
+          [k: string]: unknown;
+        }[];
+        direction: ('ltr' | 'rtl') | null;
+        format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+        indent: number;
+        version: number;
+      };
+      [k: string]: unknown;
+    };
+    richText?: {
+      root: {
+        type: string;
+        children: {
+          type: string;
+          version: number;
+          [k: string]: unknown;
+        }[];
+        direction: ('ltr' | 'rtl') | null;
+        format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+        indent: number;
+        version: number;
+      };
+      [k: string]: unknown;
+    } | null;
+  };
+  layout?: (Content | LatestArticles)[] | null;
   updatedAt: string;
   createdAt: string;
-  url?: string | null;
-  thumbnailURL?: string | null;
-  filename?: string | null;
-  mimeType?: string | null;
-  filesize?: number | null;
-  width?: number | null;
-  height?: number | null;
-  focalX?: number | null;
-  focalY?: number | null;
+  _status?: ('draft' | 'published') | null;
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
@@ -164,12 +503,28 @@ export interface PayloadLockedDocument {
   id: string;
   document?:
     | ({
+        relationTo: 'articles';
+        value: string | Article;
+      } | null)
+    | ({
+        relationTo: 'pages';
+        value: string | Page;
+      } | null)
+    | ({
+        relationTo: 'topics';
+        value: string | Topic;
+      } | null)
+    | ({
         relationTo: 'users';
         value: string | User;
       } | null)
     | ({
         relationTo: 'media';
         value: string | Media;
+      } | null)
+    | ({
+        relationTo: 'reusable-content';
+        value: string | ReusableContent;
       } | null);
   globalSlug?: string | null;
   user: {
@@ -215,9 +570,88 @@ export interface PayloadMigration {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "articles_select".
+ */
+export interface ArticlesSelect<T extends boolean = true> {
+  title?: T;
+  featuredImage?: T;
+  topic?: T;
+  tags?: T;
+  excerpt?: T;
+  content?: T | {};
+  slug?: T;
+  canonicalUrl?: T;
+  authorType?: T;
+  author?: T;
+  guestAuthor?: T;
+  authorUrl?: T;
+  relatedArticles?: T;
+  updatedAt?: T;
+  createdAt?: T;
+  _status?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "pages_select".
+ */
+export interface PagesSelect<T extends boolean = true> {
+  title?: T;
+  noIndex?: T;
+  slug?: T;
+  hero?:
+    | T
+    | {
+        type?: T;
+        mainHeading?: T;
+        subHeading?: T;
+        heroBg?: T;
+        links?:
+          | T
+          | {
+              link?:
+                | T
+                | {
+                    type?: T;
+                    newTab?: T;
+                    reference?: T;
+                    url?: T;
+                    label?: T;
+                  };
+              id?: T;
+            };
+        heroImage?: T;
+        heroImageCaption?: T;
+        richText?: T;
+      };
+  layout?: T | {};
+  updatedAt?: T;
+  createdAt?: T;
+  _status?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "topics_select".
+ */
+export interface TopicsSelect<T extends boolean = true> {
+  name?: T;
+  slug?: T;
+  icon?: T;
+  description?: T;
+  isPublic?: T;
+  articles?: T;
+  updatedAt?: T;
+  createdAt?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "users_select".
  */
 export interface UsersSelect<T extends boolean = true> {
+  firstName?: T;
+  lastName?: T;
+  displayName?: T;
+  photo?: T;
+  roles?: T;
   updatedAt?: T;
   createdAt?: T;
   email?: T;
@@ -241,6 +675,7 @@ export interface UsersSelect<T extends boolean = true> {
  */
 export interface MediaSelect<T extends boolean = true> {
   alt?: T;
+  caption?: T;
   updatedAt?: T;
   createdAt?: T;
   url?: T;
@@ -252,6 +687,16 @@ export interface MediaSelect<T extends boolean = true> {
   height?: T;
   focalX?: T;
   focalY?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "reusable-content_select".
+ */
+export interface ReusableContentSelect<T extends boolean = true> {
+  title?: T;
+  layout?: T | {};
+  updatedAt?: T;
+  createdAt?: T;
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
