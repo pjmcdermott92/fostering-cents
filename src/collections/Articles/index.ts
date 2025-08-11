@@ -55,9 +55,11 @@ export const Articles: CollectionConfig = {
         },
       ],
     },
-    richText({
+    {
       name: 'excerpt',
-    }),
+      type: 'textarea',
+      required: true,
+    },
     {
       name: 'content',
       type: 'blocks',

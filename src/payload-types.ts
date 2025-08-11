@@ -295,21 +295,7 @@ export interface Article {
    * Type a tag and press enter
    */
   tags?: string[] | null;
-  excerpt: {
-    root: {
-      type: string;
-      children: {
-        type: string;
-        version: number;
-        [k: string]: unknown;
-      }[];
-      direction: ('ltr' | 'rtl') | null;
-      format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
-      indent: number;
-      version: number;
-    };
-    [k: string]: unknown;
-  };
+  excerpt: string;
   content: (BlogContent | ReusableContentBlock)[];
   slug?: string | null;
   /**
@@ -334,7 +320,7 @@ export interface Article {
  */
 export interface Topic {
   id: string;
-  name: string;
+  title: string;
   slug: string;
   icon: string | Media;
   description: string;
@@ -635,7 +621,7 @@ export interface PagesSelect<T extends boolean = true> {
  * via the `definition` "topics_select".
  */
 export interface TopicsSelect<T extends boolean = true> {
-  name?: T;
+  title?: T;
   slug?: T;
   icon?: T;
   description?: T;

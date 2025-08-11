@@ -11,14 +11,14 @@ export const Topics: CollectionConfig = {
     delete: isAdmin,
   },
   admin: {
-    useAsTitle: 'name',
+    useAsTitle: 'title',
   },
   fields: [
     {
       type: 'row',
       fields: [
         {
-          name: 'name',
+          name: 'title',
           type: 'text',
           label: 'Name',
           required: true,
