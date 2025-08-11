@@ -1,5 +1,5 @@
-import deepMerge from '@/utilities/deepMerge';
-import { formatSlug } from '@/utilities/formatSlug';
+import deepMerge from '@/lib/utils/deepMerge';
+import { formatSlug } from '@/lib/utils/formatSlug';
 import type { Field } from 'payload';
 
 type Slug = (fieldToUse?: string, overrides?: Partial<Field>) => Field;

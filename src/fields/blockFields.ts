@@ -1,5 +1,5 @@
 import type { Field, GroupField } from 'payload';
-import deepMerge from '@/utilities/deepMerge';
+import deepMerge from '@/lib/utils/deepMerge';
 
 interface Args {
   fields: Field[];

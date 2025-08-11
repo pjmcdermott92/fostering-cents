@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 'use client';
-import { canUseDOM } from '@/utilities/canUseDom';
+import { canUseDOM } from '@/lib/utils/canUseDom';
 import { createContext, useCallback, useContext, useEffect, useState } from 'react';
 
 const CONSENT_COOKIE_KEY = 'fcb_cookieConsent';
