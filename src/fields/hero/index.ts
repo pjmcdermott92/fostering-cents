@@ -1,6 +1,9 @@
 import type { Field } from 'payload';
 import { link } from '../link';
 import { richText } from '../richText';
+import { FixedToolbarFeature, lexicalEditor } from '@payloadcms/richtext-lexical';
+import { HeroHeadingFeature } from '../richText/features/heroText/server';
+import { LargeBodyFeature } from '../richText/features/largeBody/server';
 
 export const hero: Field = {
   name: 'hero',
@@ -17,15 +20,17 @@ export const hero: Field = {
       ],
       required: true,
     },
-    {
-      name: 'mainHeading',
-      type: 'text',
-      required: true,
-    },
-    {
-      name: 'subHeading',
-      type: 'text',
-    },
+    richText({
+      label: 'Hero Text',
+      editor: lexicalEditor({
+        features: ({ defaultFeatures }) => [
+          ...defaultFeatures.filter((feature) => feature.key !== 'link'),
+          FixedToolbarFeature(),
+          HeroHeadingFeature(),
+          LargeBodyFeature(),
+        ],
+      }),
+    }),
     // HOME HERO
     {
       name: 'heroBg',
@@ -65,13 +70,6 @@ export const hero: Field = {
     richText({
       name: 'heroImageCaption',
       label: 'Hero Image Caption',
-      admin: {
-        condition: (_, siblingData) => siblingData.type == 'default',
-      },
-    }),
-    richText({
-      label: 'Additional Hero Content',
-      required: false,
       admin: {
         condition: (_, siblingData) => siblingData.type == 'default',
       },

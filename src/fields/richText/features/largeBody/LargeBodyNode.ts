@@ -8,124 +8,142 @@ import type {
   RangeSelection,
   SerializedElementNode,
   Spread,
-} from '@payloadcms/richtext-lexical/lexical'
+} from '@payloadcms/richtext-lexical/lexical';
 
 import {
   $applyNodeReplacement,
   $createParagraphNode,
   ElementNode,
   isHTMLElement,
-} from '@payloadcms/richtext-lexical/lexical'
-import { addClassNamesToElement } from '@payloadcms/richtext-lexical/lexical/utils'
+} from '@payloadcms/richtext-lexical/lexical';
+import { addClassNamesToElement } from '@payloadcms/richtext-lexical/lexical/utils';
+
+export type ElementFormatType = 'left' | 'center' | 'right' | 'justify';
 
 export type SerializedLargeBodyNode = Spread<
   {
-    type: 'largeBody'
+    type: 'largeBody';
   },
   SerializedElementNode
->
+>;
+
+function getElementFormatType(format: number): ElementFormatType {
+  switch (format) {
+    case 2:
+      return 'center';
+    case 3:
+      return 'right';
+    case 4:
+      return 'justify';
+    default:
+      return 'left';
+  }
+}
 
 /** @noInheritDoc */
 export class LargeBodyNode extends ElementNode {
   constructor({ key }: { key?: NodeKey }) {
-    super(key)
+    super(key);
   }
 
   static clone(node: LargeBodyNode): LargeBodyNode {
     return new LargeBodyNode({
       key: node.__key,
-    })
+    });
   }
 
   static getType(): string {
-    return 'largeBody'
+    return 'largeBody';
   }
 
   static importJSON(serializedNode: SerializedLargeBodyNode): LargeBodyNode {
-    const node = $createLargeBodyNode()
-    node.setFormat(serializedNode.format)
-    node.setIndent(serializedNode.indent)
-    node.setDirection(serializedNode.direction)
-    return node
+    const node = $createLargeBodyNode();
+    node.setFormat(serializedNode.format);
+    node.setIndent(serializedNode.indent);
+    node.setDirection(serializedNode.direction);
+    return node;
   }
 
   canBeEmpty(): true {
-    return true
+    return true;
   }
 
   canInsertTextAfter(): true {
-    return true
+    return true;
   }
 
   canInsertTextBefore(): true {
-    return true
+    return true;
   }
   collapseAtStart(): true {
-    const paragraph = $createParagraphNode()
-    const children = this.getChildren()
-    children.forEach((child) => paragraph.append(child))
-    this.replace(paragraph)
-    return true
+    const paragraph = $createParagraphNode();
+    const children = this.getChildren();
+    children.forEach((child) => paragraph.append(child));
+    this.replace(paragraph);
+    return true;
   }
 
   createDOM(config: EditorConfig): HTMLElement {
-    const element = document.createElement('span')
-    addClassNamesToElement(element, 'rich-text-large-body')
-    return element
+    const element = document.createElement('span');
+    addClassNamesToElement(element, 'rich-text-large-body');
+    return element;
   }
 
   exportDOM(editor: LexicalEditor): DOMExportOutput {
-    const { element } = super.exportDOM(editor)
+    const { element } = super.exportDOM(editor);
 
     if (element && isHTMLElement(element)) {
       if (this.isEmpty()) {
-        element.append(document.createElement('br'))
+        element.append(document.createElement('br'));
       }
 
-      const formatType = this.getFormatType()
-      element.style.textAlign = formatType
+      const formatType = this.getFormatType();
+      element.style.textAlign = formatType;
 
-      const direction = this.getDirection()
+      const direction = this.getDirection();
       if (direction) {
-        element.dir = direction
+        element.dir = direction;
       }
     }
 
     return {
       element,
-    }
+    };
   }
 
   exportJSON(): SerializedElementNode {
     return {
       ...super.exportJSON(),
       type: this.getType(),
-    }
+      format: getElementFormatType(this.getFormat()),
+      indent: this.getIndent(),
+      direction: this.getDirection(),
+    };
   }
 
   insertNewAfter(_: RangeSelection, restoreSelection?: boolean): ParagraphNode {
-    const newBlock = $createParagraphNode()
-    const direction = this.getDirection()
-    newBlock.setDirection(direction)
-    this.insertAfter(newBlock, restoreSelection)
-    return newBlock
+    const newBlock = $createParagraphNode();
+    const direction = this.getDirection();
+    newBlock.setDirection(direction);
+    this.insertAfter(newBlock, restoreSelection);
+    return newBlock;
   }
 
   // Mutation
 
   isInline(): false {
-    return false
+    return false;
   }
 
   updateDOM(prevNode: LargeBodyNode, dom: HTMLElement): boolean {
-    return false
+    return false;
   }
 }
 
 export function $createLargeBodyNode(): LargeBodyNode {
-  return $applyNodeReplacement(new LargeBodyNode({}))
+  return $applyNodeReplacement(new LargeBodyNode({}));
 }
 
 export function $isLargeBodyNode(node: LexicalNode | null | undefined): node is LargeBodyNode {
-  return node instanceof LargeBodyNode
+  return node instanceof LargeBodyNode;
 }

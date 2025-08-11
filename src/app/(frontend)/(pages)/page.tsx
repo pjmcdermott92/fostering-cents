@@ -1,9 +1,5 @@
-import { Button } from '@/components/ui/button';
+import Page, { generateMetadata } from './[...slug]/page';
 
-export default function Homepage() {
-  return (
-    <>
-      <Button size="lg">Test</Button>
-    </>
-  );
-}
+export default Page;
+
+export { generateMetadata };

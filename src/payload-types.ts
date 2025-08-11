@@ -434,8 +434,21 @@ export interface Page {
   slug?: string | null;
   hero: {
     type: 'default' | 'home';
-    mainHeading: string;
-    subHeading?: string | null;
+    richText: {
+      root: {
+        type: string;
+        children: {
+          type: string;
+          version: number;
+          [k: string]: unknown;
+        }[];
+        direction: ('ltr' | 'rtl') | null;
+        format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+        indent: number;
+        version: number;
+      };
+      [k: string]: unknown;
+    };
     heroBg?: (string | null) | Media;
     /**
      * Add upto 3 Call To Action buttons
@@ -480,23 +493,8 @@ export interface Page {
       };
       [k: string]: unknown;
     } | null;
-    richText?: {
-      root: {
-        type: string;
-        children: {
-          type: string;
-          version: number;
-          [k: string]: unknown;
-        }[];
-        direction: ('ltr' | 'rtl') | null;
-        format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
-        indent: number;
-        version: number;
-      };
-      [k: string]: unknown;
-    } | null;
   };
-  layout?: (Content | LatestArticles)[] | null;
+  content?: (Content | LatestArticles)[] | null;
   updatedAt: string;
   createdAt: string;
   _status?: ('draft' | 'published') | null;
@@ -608,8 +606,7 @@ export interface PagesSelect<T extends boolean = true> {
     | T
     | {
         type?: T;
-        mainHeading?: T;
-        subHeading?: T;
+        richText?: T;
         heroBg?: T;
         links?:
           | T
@@ -627,9 +624,8 @@ export interface PagesSelect<T extends boolean = true> {
             };
         heroImage?: T;
         heroImageCaption?: T;
-        richText?: T;
       };
-  layout?: T | {};
+  content?: T | {};
   updatedAt?: T;
   createdAt?: T;
   _status?: T;

@@ -4,6 +4,7 @@ import { slugField } from '@/fields/slug';
 import { CollectionConfig } from 'payload';
 import { revalidateAfterChange } from './hooks/revalidateAfterChange';
 import { hero } from '@/fields/hero';
+import { generatePreviewPath } from '@/lib/utils/generatePreviewPath';
 
 export const Pages: CollectionConfig = {
   slug: 'pages',
@@ -17,6 +18,23 @@ export const Pages: CollectionConfig = {
   admin: {
     defaultColumns: ['title', 'slug', 'createdAt', 'updatedAt'],
     useAsTitle: 'title',
+    livePreview: {
+      url: ({ data, req }) => {
+        const path = generatePreviewPath({
+          slug: typeof data?.slug === 'string' ? data.slug : '',
+          collection: 'pages',
+          req,
+        });
+
+        return path;
+      },
+    },
+    preview: (data, { req }) =>
+      generatePreviewPath({
+        slug: typeof data?.slug === 'string' ? data.slug : '',
+        collection: 'pages',
+        req,
+      }),
   },
   defaultPopulate: {
     title: true,
@@ -49,7 +67,7 @@ export const Pages: CollectionConfig = {
           label: 'Content',
           fields: [
             {
-              name: 'layout',
+              name: 'content',
               type: 'blocks',
               blocks: [],
               blockReferences: ['content', 'latestArticles'],

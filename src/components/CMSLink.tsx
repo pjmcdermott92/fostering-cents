@@ -2,8 +2,9 @@ import Link from 'next/link';
 import { Button } from './ui/button';
 import { generateCmsLinkHref, type LinkType, type Reference } from '@/lib/utils/generateCmsLinkUrl';
 
+type LinkAppearance = 'default' | 'primary' | 'secondary' | null;
 export type CMSLinkType = {
-  appearance?: 'default' | 'primary' | 'secondary' | null;
+  appearance?: LinkAppearance;
   customId?: string | null;
   label?: string | null;
   type?: LinkType | null;
@@ -65,25 +66,25 @@ export function CMSLink(props: CMSLinkType) {
     </>
   );
 
-  const getLink = () =>
+  const getLink = (children: React.ReactNode) =>
     isInternal ? (
       <Link href={href} {...commonProps} prefetch={false}>
-        {content}
+        {children}
       </Link>
     ) : (
       <a href={href} {...commonProps}>
-        {content}
+        {children}
       </a>
     );
 
-  if (appearance === 'default') return getLink();
+  if (appearance === 'default') return getLink(content);
 
   const variant =
     appearance === 'primary' ? 'default' : appearance === 'secondary' ? 'inverted' : 'default';
 
-  return (
-    <Button variant={variant} size={fullWidth ? 'default' : 'default'} asChild>
-      {getLink()}
-    </Button>
+  return getLink(
+    <Button variant={variant} size={fullWidth ? 'lg' : 'default'}>
+      {content}
+    </Button>,
   );
 }

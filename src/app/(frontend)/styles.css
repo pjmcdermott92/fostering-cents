@@ -10,7 +10,7 @@
   --radius-xl: calc(var(--radius) + 4px);
   --color-background: var(--background);
   --color-foreground: var(--foreground);
-  --color-card: var(--card);
+  --color-card-bg: oklch(98% 0.01 100);
   --color-card-foreground: var(--card-foreground);
   --color-popover: var(--popover);
   --color-popover-foreground: var(--popover-foreground);
@@ -48,6 +48,7 @@
   --color-warning: oklch(70% 0.18 60);
   --color-danger: oklch(72% 0.15 25);
   --color-danger-dark: oklch(0.65 0.15 25);
+  --color-accent-light: oklch(96% 0.03 100);
 
   --text-hero-xl: 85px;
   --text-hero-xl--line-height: 1.25;
@@ -123,6 +124,10 @@
 
   .text-hero {
     @apply text-hero-sm sm:text-hero-md md:text-hero-xl;
+  }
+
+  .richText {
+    @apply space-y-4;
   }
 
   .richText a {

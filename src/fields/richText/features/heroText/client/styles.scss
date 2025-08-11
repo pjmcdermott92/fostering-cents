@@ -1,0 +1,12 @@
+@use '~@payloadcms/ui/scss';
+
+.rich-text-hero-heading {
+  display: inline-block;
+  font-size: 54px;
+  font-weight: bold;
+  padding-bottom: 1.1rem;
+}
+
+.rich-text-hero-heading strong {
+  font-weight: bolder;
+}

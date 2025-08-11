@@ -1,0 +1,79 @@
+// @ts-check
+import { cn } from '@/lib/utils';
+import {
+  DefaultNodeTypes,
+  SerializedBlockNode,
+  SerializedLinkNode,
+  type DefaultTypedEditorState,
+} from '@payloadcms/richtext-lexical';
+import {
+  RichText as ConvertRichText,
+  JSXConvertersFunction,
+  LinkJSXConverter,
+} from '@payloadcms/richtext-lexical/react';
+import React from 'react';
+// import s from './styles.module.scss';
+
+import type {} from '@/payload-types';
+import type { SerializedLargeBodyNode } from '@/fields/richText/features/largeBody/LargeBodyNode';
+import type { SerializedHeroHeadingNode } from '@/fields/richText/features/heroText/HeroHeadingNode';
+
+import { LargeBody } from '../LargeBody';
+import { HeroHeading } from '../HeroHeading';
+
+type NodeTypes = DefaultNodeTypes | SerializedLargeBodyNode | SerializedHeroHeadingNode;
+
+const internalDocToHref = ({ linkNode }: { linkNode: SerializedLinkNode }) => {
+  const { value, relationTo } = linkNode.fields.doc!;
+  if (typeof value !== 'object') {
+    throw new Error('Expected value to be an object');
+  }
+  const slug = value.slug;
+
+  switch (relationTo) {
+    case 'articles':
+      return `/articles/${slug}`;
+    case 'topics':
+      return `/topics/${slug}`;
+    default:
+      return `/${slug}`;
+  }
+};
+
+const jsxConverters: JSXConvertersFunction<NodeTypes> = ({ defaultConverters }) => ({
+  ...defaultConverters,
+  ...LinkJSXConverter({ internalDocToHref }),
+  blocks: {},
+  largeBody: ({ node, nodesToJSX }) => {
+    return (
+      // @ts-expect-error working on a fix
+      <LargeBody format={node.format} direction={node.direction}>
+        {nodesToJSX({ nodes: node.children })}
+      </LargeBody>
+    );
+  },
+  heroHeading: ({ node, nodesToJSX }) => {
+    return (
+      // @ts-expect-error working on a fix
+      <HeroHeading format={node.format} direction={node.direction}>
+        {nodesToJSX({ nodes: node.children })}
+      </HeroHeading>
+    );
+  },
+});
+
+type Props = {
+  data: DefaultTypedEditorState;
+} & React.HTMLAttributes<HTMLDivElement>;
+
+export function RichText(props: Props) {
+  const { className, ...rest } = props;
+
+  return (
+    <ConvertRichText
+      converters={jsxConverters}
+      className={cn('mx-auto richText', 'richText', className)}
+      {...rest}
+    />
+  );
+}

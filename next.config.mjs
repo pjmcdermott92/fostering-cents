@@ -21,6 +21,9 @@ const nextConfig = {
 
     return webpackConfig;
   },
+  images: {
+    domains: ['cdn.fosteringcents.com'],
+  },
 };
 
 export default withPayload(nextConfig, { devBundleServerPackages: false });

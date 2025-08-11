@@ -1,0 +1,66 @@
+import { fetchPage } from '@/app/_data/pages';
+import { RenderHero } from '@/components/heros';
+import { LivePreviewListener } from '@/components/LivePreviewListener';
+import { Metadata } from 'next';
+import { unstable_cache } from 'next/cache';
+import { draftMode } from 'next/headers';
+import { notFound } from 'next/navigation';
+
+type Props = {
+  params: Promise<{ slug: any }>;
+};
+
+const getPage = async (slug: string[], draft?: boolean) =>
+  draft ? fetchPage(slug) : unstable_cache(fetchPage, [`page-${slug}`])(slug);
+
+export default async function Page({ params }: Props) {
+  const { isEnabled: draft } = await draftMode();
+  const { slug } = await params;
+  const page = await getPage(slug, draft);
+  const url = '/' + (Array.isArray(slug) ? slug.join('/') : slug);
+
+  if (!page) return notFound();
+
+  const { hero, content } = page;
+
+  // console.log(hero);
+
+  return (
+    <>
+      {draft && <LivePreviewListener />}
+
+      <RenderHero {...hero} />
+    </>
+  );
+}
+
+export async function generateMetadata({ params }: Props): Promise<Metadata> {
+  const { isEnabled: draft } = await draftMode();
+  const { slug = ['home'] } = await params;
+  const page = await getPage(slug, draft);
+
+  const title = page?.title ?? '';
+  const description = '';
+  const url = `/pages/${slug}`;
+
+  const noIndexMeta = page?.noIndex ? { robots: 'noindex' } : {};
+  //   const metaImage = page?.meta?.image;
+
+  let ogImage: string | undefined;
+
+  //   if (metaImage && typeof metaImage !== 'string' && metaImage.url) {
+  //     ogImage = metaImage.url;
+  //   }
+
+  return {
+    title,
+    description,
+    openGraph: {
+      title,
+      description,
+      images: ogImage ? [{ url: ogImage }] : undefined,
+      url,
+    },
+    ...noIndexMeta,
+  };
+}

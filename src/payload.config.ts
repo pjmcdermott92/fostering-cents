@@ -1,6 +1,5 @@
 // storage-adapter-import-placeholder
 import { mongooseAdapter } from '@payloadcms/db-mongodb';
-import { payloadCloudPlugin } from '@payloadcms/payload-cloud';
 import {
   BlocksFeature,
   FixedToolbarFeature,
@@ -10,24 +9,25 @@ import {
 } from '@payloadcms/richtext-lexical';
 import path from 'path';
 import { buildConfig, TextField } from 'payload';
-import { fileURLToPath } from 'url';
 import sharp from 'sharp';
+import { plugins } from './plugins';
+import { fileURLToPath } from 'url';
 
-import { Users } from './collections/Users';
+import { Articles } from './collections/Articles';
 import { Media } from './collections/Media';
 import { Pages } from './collections/Pages';
 import { Topics } from './collections/Topics';
-import { Articles } from './collections/Articles';
+import { Users } from './collections/Users';
 
-import { LargeBodyFeature } from './fields/richText/features/largeBody/server';
-import { link } from './fields/link';
-import { Content } from './blocks/Content';
 import { BlogContent } from './blocks/BlogContent';
-import { ReusableContent } from './collections/ReusableContent';
-import { ReusableContentBlock } from './blocks/ReusableContent';
+import { Content } from './blocks/Content';
 import { LatestArticles } from './blocks/LatestArticles';
-import { MainNavigation } from './globals/MainNavigation';
+import { ReusableContentBlock } from './blocks/ReusableContent';
+import { ReusableContent } from './collections/ReusableContent';
+import { link } from './fields/link';
+import { LargeBodyFeature } from './fields/richText/features/largeBody/server';
 import { FooterLinks } from './globals/FooterLinks';
+import { MainNavigation } from './globals/MainNavigation';
 
 const filename = fileURLToPath(import.meta.url);
 const dirname = path.dirname(filename);
@@ -91,6 +91,7 @@ export default buildConfig({
           },
         },
       }),
+      // HeroHeadingFeature(),
       LargeBodyFeature(),
     ],
   }),
@@ -102,8 +103,5 @@ export default buildConfig({
     url: process.env.DATABASE_URI || '',
   }),
   sharp,
-  plugins: [
-    payloadCloudPlugin(),
-    // storage-adapter-placeholder
-  ],
+  plugins,
 });
