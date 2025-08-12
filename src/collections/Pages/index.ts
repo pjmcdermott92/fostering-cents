@@ -70,7 +70,7 @@ export const Pages: CollectionConfig = {
               name: 'content',
               type: 'blocks',
               blocks: [],
-              blockReferences: ['content', 'latestArticles', 'topicsGrid'],
+              blockReferences: ['content', 'accentBlock', 'latestArticles', 'topicsGrid'],
             },
           ],
         },

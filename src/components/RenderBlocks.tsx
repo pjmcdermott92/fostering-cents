@@ -3,11 +3,13 @@ import type { Article, Page } from '@/payload-types';
 import { TopicsGrid } from './blocks/TopicsGrid';
 import { LatestArticles } from './blocks/LatestArticles';
 import { ContentBlock } from './blocks/Content';
+import { AccentBlock } from './blocks/AccentBlock';
 
 const blockComponents = {
   topicsGrid: TopicsGrid,
   latestArticles: LatestArticles,
   content: ContentBlock,
+  accentBlock: AccentBlock,
 };
 
 export async function RenderBlocks({ blocks }: { blocks: Page['content'] | Article['content'] }) {

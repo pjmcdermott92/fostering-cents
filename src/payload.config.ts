@@ -29,6 +29,7 @@ import { LargeBodyFeature } from './fields/richText/features/largeBody/server';
 import { FooterLinks } from './globals/FooterLinks';
 import { MainNavigation } from './globals/MainNavigation';
 import { TopicsGrid } from './blocks/TopicsGrid';
+import { AccentBlock } from './blocks/AccentBlock';
 
 const filename = fileURLToPath(import.meta.url);
 const dirname = path.dirname(filename);
@@ -40,7 +41,7 @@ export default buildConfig({
       baseDir: path.resolve(dirname),
     },
   },
-  blocks: [Content, BlogContent, LatestArticles, ReusableContentBlock, TopicsGrid],
+  blocks: [Content, BlogContent, AccentBlock, LatestArticles, ReusableContentBlock, TopicsGrid],
   collections: [Articles, Pages, Topics, Users, Media, ReusableContent],
   globals: [MainNavigation, FooterLinks],
   editor: lexicalEditor({

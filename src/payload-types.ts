@@ -68,6 +68,7 @@ export interface Config {
   blocks: {
     content: Content;
     blogContent: BlogContent;
+    accentBlock: AccentBlock;
     latestArticles: LatestArticles;
     reusableContentBlock: ReusableContentBlock;
     topicsGrid: TopicsGrid;
@@ -256,10 +257,10 @@ export interface BlogContent {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "latestArticles".
+ * via the `definition` "accentBlock".
  */
-export interface LatestArticles {
-  latestArticlesBlockFields: {
+export interface AccentBlock {
+  accentBlockFields: {
     settings: {
       bgType: 'transparent' | 'solid' | 'image';
       /**
@@ -274,10 +275,131 @@ export interface LatestArticles {
       top: 'hero' | 'large' | 'small' | 'extraLarge' | 'underlay';
       bottom: 'hero' | 'large' | 'small' | 'extraLarge';
     };
-    sectionHeading: string;
-    displayShowAllLink?: boolean | null;
-    useLeadingContent?: boolean | null;
-    leadingContent?: {
+    bgColor: 'warning' | 'info' | 'danger' | 'success' | 'accent';
+    heading: string;
+    imagePosition: 'none' | 'right' | 'left' | 'floatRight' | 'floatLeft';
+    mediaFields?: {
+      image?: (string | null) | Media;
+      imageSize: 'video' | 'square' | 'vertical';
+      caption?: {
+        root: {
+          type: string;
+          children: {
+            type: string;
+            version: number;
+            [k: string]: unknown;
+          }[];
+          direction: ('ltr' | 'rtl') | null;
+          format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+          indent: number;
+          version: number;
+        };
+        [k: string]: unknown;
+      } | null;
+    };
+    richText: {
+      root: {
+        type: string;
+        children: {
+          type: string;
+          version: number;
+          [k: string]: unknown;
+        }[];
+        direction: ('ltr' | 'rtl') | null;
+        format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+        indent: number;
+        version: number;
+      };
+      [k: string]: unknown;
+    };
+    links?:
+      | {
+          link: {
+            type?: ('reference' | 'custom') | null;
+            newTab?: boolean | null;
+            reference?:
+              | ({
+                  relationTo: 'pages';
+                  value: string | Page;
+                } | null)
+              | ({
+                  relationTo: 'articles';
+                  value: string | Article;
+                } | null)
+              | ({
+                  relationTo: 'topics';
+                  value: string | Topic;
+                } | null);
+            url?: string | null;
+            label: string;
+          };
+          id?: string | null;
+        }[]
+      | null;
+  };
+  id?: string | null;
+  blockName?: string | null;
+  blockType: 'accentBlock';
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "pages".
+ */
+export interface Page {
+  id: string;
+  title: string;
+  /**
+   * Prevent indexing in search engines
+   */
+  noIndex?: boolean | null;
+  slug?: string | null;
+  hero: {
+    type: 'default' | 'home';
+    richText: {
+      root: {
+        type: string;
+        children: {
+          type: string;
+          version: number;
+          [k: string]: unknown;
+        }[];
+        direction: ('ltr' | 'rtl') | null;
+        format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+        indent: number;
+        version: number;
+      };
+      [k: string]: unknown;
+    };
+    heroBg?: (string | null) | Media;
+    /**
+     * Add upto 3 Call To Action buttons
+     */
+    links?:
+      | {
+          link: {
+            type?: ('reference' | 'custom') | null;
+            newTab?: boolean | null;
+            reference?:
+              | ({
+                  relationTo: 'pages';
+                  value: string | Page;
+                } | null)
+              | ({
+                  relationTo: 'articles';
+                  value: string | Article;
+                } | null)
+              | ({
+                  relationTo: 'topics';
+                  value: string | Topic;
+                } | null);
+            url?: string | null;
+            label: string;
+          };
+          id?: string | null;
+        }[]
+      | null;
+    heroImage?: (string | null) | Media;
+    heroImageCaption?: {
       root: {
         type: string;
         children: {
@@ -292,14 +414,11 @@ export interface LatestArticles {
       };
       [k: string]: unknown;
     } | null;
-    /**
-     * Select any articles that you don't want to show
-     */
-    articlesToExclude?: (string | Article)[] | null;
   };
-  id?: string | null;
-  blockName?: string | null;
-  blockType: 'latestArticles';
+  content?: (Content | AccentBlock | LatestArticles | TopicsGrid)[] | null;
+  updatedAt: string;
+  createdAt: string;
+  _status?: ('draft' | 'published') | null;
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
@@ -428,74 +547,28 @@ export interface User {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "topicsGrid".
+ * via the `definition` "latestArticles".
  */
-export interface TopicsGrid {
-  sectionLabel: string;
-  topicsToShow?: (string | Topic)[] | null;
-  id?: string | null;
-  blockName?: string | null;
-  blockType: 'topicsGrid';
-}
-/**
- * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "pages".
- */
-export interface Page {
-  id: string;
-  title: string;
-  /**
-   * Prevent indexing in search engines
-   */
-  noIndex?: boolean | null;
-  slug?: string | null;
-  hero: {
-    type: 'default' | 'home';
-    richText: {
-      root: {
-        type: string;
-        children: {
-          type: string;
-          version: number;
-          [k: string]: unknown;
-        }[];
-        direction: ('ltr' | 'rtl') | null;
-        format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
-        indent: number;
-        version: number;
-      };
-      [k: string]: unknown;
+export interface LatestArticles {
+  latestArticlesBlockFields: {
+    settings: {
+      bgType: 'transparent' | 'solid' | 'image';
+      /**
+       * Choose a fall-back color for background image
+       */
+      bgColor?: ('primary' | 'accentLight' | 'accentDark') | null;
+      bgImage?: (string | null) | Media;
+      containerWidth?: ('normal' | 'narrow' | 'wide') | null;
+      theme?: ('light' | 'dark') | null;
     };
-    heroBg?: (string | null) | Media;
-    /**
-     * Add upto 3 Call To Action buttons
-     */
-    links?:
-      | {
-          link: {
-            type?: ('reference' | 'custom') | null;
-            newTab?: boolean | null;
-            reference?:
-              | ({
-                  relationTo: 'pages';
-                  value: string | Page;
-                } | null)
-              | ({
-                  relationTo: 'articles';
-                  value: string | Article;
-                } | null)
-              | ({
-                  relationTo: 'topics';
-                  value: string | Topic;
-                } | null);
-            url?: string | null;
-            label: string;
-          };
-          id?: string | null;
-        }[]
-      | null;
-    heroImage?: (string | null) | Media;
-    heroImageCaption?: {
+    padding: {
+      top: 'hero' | 'large' | 'small' | 'extraLarge' | 'underlay';
+      bottom: 'hero' | 'large' | 'small' | 'extraLarge';
+    };
+    sectionHeading: string;
+    displayShowAllLink?: boolean | null;
+    useLeadingContent?: boolean | null;
+    leadingContent?: {
       root: {
         type: string;
         children: {
@@ -510,11 +583,25 @@ export interface Page {
       };
       [k: string]: unknown;
     } | null;
+    /**
+     * Select any articles that you don't want to show
+     */
+    articlesToExclude?: (string | Article)[] | null;
   };
-  content?: (Content | LatestArticles | TopicsGrid)[] | null;
-  updatedAt: string;
-  createdAt: string;
-  _status?: ('draft' | 'published') | null;
+  id?: string | null;
+  blockName?: string | null;
+  blockType: 'latestArticles';
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "topicsGrid".
+ */
+export interface TopicsGrid {
+  sectionLabel: string;
+  topicsToShow?: (string | Topic)[] | null;
+  id?: string | null;
+  blockName?: string | null;
+  blockType: 'topicsGrid';
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
