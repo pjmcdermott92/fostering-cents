@@ -1,4 +1,5 @@
 import { blockFields } from '@/fields/blockFields';
+import { richText } from '@/fields/richText';
 import type { Block } from 'payload';
 
 export const LatestArticles: Block = {
@@ -8,11 +9,30 @@ export const LatestArticles: Block = {
       name: 'latestArticlesBlockFields',
       fields: [
         {
+          name: 'sectionHeading',
+          type: 'text',
+          required: true,
+          defaultValue: 'Latest Articles',
+        },
+        {
           name: 'displayShowAllLink',
           label: 'Display "Show All Articles" Link',
           type: 'checkbox',
           defaultValue: true,
         },
+        {
+          name: 'useLeadingContent',
+          type: 'checkbox',
+          label: 'Use Leading Content',
+        },
+        richText({
+          name: 'leadingContent',
+          label: 'Leading Content',
+          required: true,
+          admin: {
+            condition: (_, siblingData) => siblingData.useLeadingContent,
+          },
+        }),
         {
           name: 'articlesToExclude',
           type: 'relationship',

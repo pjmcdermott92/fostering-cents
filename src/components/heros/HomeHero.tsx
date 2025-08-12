@@ -32,13 +32,13 @@ export function HomeHero(props: Props) {
       >
         <div className="m-2 md:m-5 relative z-1 text-white p-2 md:p-4 space-y-5">
           <RichText data={richText} />
-          {links?.length && (
+          {links?.length ? (
             <div className="flex items-center flex-col md:flex-row justify-center p-4 gap-2">
               {links.map((link) => (
                 <CMSLink key={link.id} fullWidth appearance="primary" {...link.link} />
               ))}
             </div>
-          )}
+          ) : null}
         </div>
         <div className="absolute inset-3 md:inset-12 bg-black/65" />
       </div>

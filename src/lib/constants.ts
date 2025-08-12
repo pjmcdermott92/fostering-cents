@@ -5,6 +5,8 @@ export const SERVER_URL = process.env.NEXT_PUBLIC_SERVER_URL || 'http://localhos
 export const COOKIE_CONSENT_KEY = process.env.NEXT_PUBLIC_COOKIE_CONSENT_KEY ?? 'fcb_cookieConsent';
 export const MOBILE_NAV_SLUG = 'mobile-nav';
 
+export const ARCHIVE_PER_PAGE_LIMIT = Number(process.env.NEXT_PUBLIC_ARCHIVE_PER_PAGE_LIMIT) ?? 9;
+
 // Cloudflare R2
 export const R2_ENDPOINT = process.env.R2_ENDPOINT ?? '';
 export const R2_ACCESS_KEY = process.env.R2_ACCESS_KEY ?? '';

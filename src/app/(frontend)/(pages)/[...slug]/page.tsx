@@ -1,6 +1,7 @@
 import { fetchPage } from '@/app/_data/pages';
 import { RenderHero } from '@/components/heros';
 import { LivePreviewListener } from '@/components/LivePreviewListener';
+import { RenderBlocks } from '@/components/RenderBlocks';
 import { Metadata } from 'next';
 import { unstable_cache } from 'next/cache';
 import { draftMode } from 'next/headers';
@@ -30,6 +31,7 @@ export default async function Page({ params }: Props) {
       {draft && <LivePreviewListener />}
 
       <RenderHero {...hero} />
+      <RenderBlocks blocks={content} />
     </>
   );
 }

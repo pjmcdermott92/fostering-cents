@@ -28,6 +28,7 @@ import { link } from './fields/link';
 import { LargeBodyFeature } from './fields/richText/features/largeBody/server';
 import { FooterLinks } from './globals/FooterLinks';
 import { MainNavigation } from './globals/MainNavigation';
+import { TopicsGrid } from './blocks/TopicsGrid';
 
 const filename = fileURLToPath(import.meta.url);
 const dirname = path.dirname(filename);
@@ -39,7 +40,7 @@ export default buildConfig({
       baseDir: path.resolve(dirname),
     },
   },
-  blocks: [Content, BlogContent, LatestArticles, ReusableContentBlock],
+  blocks: [Content, BlogContent, LatestArticles, ReusableContentBlock, TopicsGrid],
   collections: [Articles, Pages, Topics, Users, Media, ReusableContent],
   globals: [MainNavigation, FooterLinks],
   editor: lexicalEditor({

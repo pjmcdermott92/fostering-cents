@@ -70,6 +70,7 @@ export interface Config {
     blogContent: BlogContent;
     latestArticles: LatestArticles;
     reusableContentBlock: ReusableContentBlock;
+    topicsGrid: TopicsGrid;
   };
   collections: {
     articles: Article;
@@ -142,7 +143,7 @@ export interface UserAuthOperations {
  */
 export interface Content {
   contentFields: {
-    settings: {
+    settings?: {
       bgType?: ('transparent' | 'solid' | 'image') | null;
       /**
        * Choose a fall-back color for background image
@@ -151,58 +152,58 @@ export interface Content {
       bgImage?: (string | null) | Media;
       containerWidth?: ('normal' | 'narrow' | 'wide') | null;
       theme?: ('light' | 'dark') | null;
-      padding: {
-        top: 'hero' | 'large' | 'small' | 'extraLarge' | 'underlay';
-        bottom: 'hero' | 'large' | 'small' | 'extraLarge';
-      };
-      useLeadingContent?: boolean | null;
-      leadingContent?: {
-        root: {
-          type: string;
-          children: {
-            type: string;
-            version: number;
-            [k: string]: unknown;
-          }[];
-          direction: ('ltr' | 'rtl') | null;
-          format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
-          indent: number;
-          version: number;
-        };
-        [k: string]: unknown;
-      } | null;
-      layout?: ('oneColumn' | 'twoColumns' | 'twoThirdsOneThird' | 'oneThirdTwoThirds') | null;
-      columnOne: {
-        root: {
-          type: string;
-          children: {
-            type: string;
-            version: number;
-            [k: string]: unknown;
-          }[];
-          direction: ('ltr' | 'rtl') | null;
-          format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
-          indent: number;
-          version: number;
-        };
-        [k: string]: unknown;
-      };
-      columnTwo?: {
-        root: {
-          type: string;
-          children: {
-            type: string;
-            version: number;
-            [k: string]: unknown;
-          }[];
-          direction: ('ltr' | 'rtl') | null;
-          format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
-          indent: number;
-          version: number;
-        };
-        [k: string]: unknown;
-      } | null;
     };
+    padding: {
+      top: 'hero' | 'large' | 'small' | 'extraLarge' | 'underlay';
+      bottom: 'hero' | 'large' | 'small' | 'extraLarge';
+    };
+    useLeadingContent?: boolean | null;
+    leadingContent?: {
+      root: {
+        type: string;
+        children: {
+          type: string;
+          version: number;
+          [k: string]: unknown;
+        }[];
+        direction: ('ltr' | 'rtl') | null;
+        format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+        indent: number;
+        version: number;
+      };
+      [k: string]: unknown;
+    } | null;
+    layout?: ('oneColumn' | 'twoColumns' | 'twoThirdsOneThird' | 'oneThirdTwoThirds') | null;
+    columnOne: {
+      root: {
+        type: string;
+        children: {
+          type: string;
+          version: number;
+          [k: string]: unknown;
+        }[];
+        direction: ('ltr' | 'rtl') | null;
+        format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+        indent: number;
+        version: number;
+      };
+      [k: string]: unknown;
+    };
+    columnTwo?: {
+      root: {
+        type: string;
+        children: {
+          type: string;
+          version: number;
+          [k: string]: unknown;
+        }[];
+        direction: ('ltr' | 'rtl') | null;
+        format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+        indent: number;
+        version: number;
+      };
+      [k: string]: unknown;
+    } | null;
   };
   id?: string | null;
   blockName?: string | null;
@@ -258,7 +259,7 @@ export interface BlogContent {
  */
 export interface LatestArticles {
   latestArticlesBlockFields: {
-    settings: {
+    settings?: {
       bgType?: ('transparent' | 'solid' | 'image') | null;
       /**
        * Choose a fall-back color for background image
@@ -267,16 +268,33 @@ export interface LatestArticles {
       bgImage?: (string | null) | Media;
       containerWidth?: ('normal' | 'narrow' | 'wide') | null;
       theme?: ('light' | 'dark') | null;
-      padding: {
-        top: 'hero' | 'large' | 'small' | 'extraLarge' | 'underlay';
-        bottom: 'hero' | 'large' | 'small' | 'extraLarge';
-      };
-      displayShowAllLink?: boolean | null;
-      /**
-       * Select any articles that you don't want to show
-       */
-      articlesToExclude?: (string | null) | Article;
     };
+    padding: {
+      top: 'hero' | 'large' | 'small' | 'extraLarge' | 'underlay';
+      bottom: 'hero' | 'large' | 'small' | 'extraLarge';
+    };
+    sectionHeading: string;
+    displayShowAllLink?: boolean | null;
+    useLeadingContent?: boolean | null;
+    leadingContent?: {
+      root: {
+        type: string;
+        children: {
+          type: string;
+          version: number;
+          [k: string]: unknown;
+        }[];
+        direction: ('ltr' | 'rtl') | null;
+        format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+        indent: number;
+        version: number;
+      };
+      [k: string]: unknown;
+    } | null;
+    /**
+     * Select any articles that you don't want to show
+     */
+    articlesToExclude?: (string | null) | Article;
   };
   id?: string | null;
   blockName?: string | null;
@@ -342,7 +360,7 @@ export interface Topic {
  */
 export interface ReusableContentBlock {
   reusableContentBlockFields: {
-    settings: {
+    settings?: {
       bgType?: ('transparent' | 'solid' | 'image') | null;
       /**
        * Choose a fall-back color for background image
@@ -351,16 +369,16 @@ export interface ReusableContentBlock {
       bgImage?: (string | null) | Media;
       containerWidth?: ('normal' | 'narrow' | 'wide') | null;
       theme?: ('light' | 'dark') | null;
-      padding: {
-        top: 'hero' | 'large' | 'small' | 'extraLarge' | 'underlay';
-        bottom: 'hero' | 'large' | 'small' | 'extraLarge';
-      };
-      reusableContent: string | ReusableContent;
-      /**
-       * A custom ID that can be used to target this block is CSS or JavaScript.
-       */
-      customId?: string | null;
     };
+    padding: {
+      top: 'hero' | 'large' | 'small' | 'extraLarge' | 'underlay';
+      bottom: 'hero' | 'large' | 'small' | 'extraLarge';
+    };
+    reusableContent: string | ReusableContent;
+    /**
+     * A custom ID that can be used to target this block is CSS or JavaScript.
+     */
+    customId?: string | null;
   };
   id?: string | null;
   blockName?: string | null;
@@ -405,6 +423,17 @@ export interface User {
       }[]
     | null;
   password?: string | null;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "topicsGrid".
+ */
+export interface TopicsGrid {
+  sectionLabel: string;
+  topicsToShow?: (string | Topic)[] | null;
+  id?: string | null;
+  blockName?: string | null;
+  blockType: 'topicsGrid';
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
@@ -480,7 +509,7 @@ export interface Page {
       [k: string]: unknown;
     } | null;
   };
-  content?: (Content | LatestArticles)[] | null;
+  content?: (Content | LatestArticles | TopicsGrid)[] | null;
   updatedAt: string;
   createdAt: string;
   _status?: ('draft' | 'published') | null;
