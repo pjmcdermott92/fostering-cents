@@ -22,14 +22,32 @@ export const Content: Block = {
           },
         }),
         {
-          name: 'layout',
-          type: 'select',
-          defaultValue: 'oneColumn',
-          options: [
-            { label: 'One Column', value: 'oneColumn' },
-            { label: 'Two Columns', value: 'twoColumns' },
-            { label: 'Two-Thirds & One-Third', value: 'twoThirdsOneThird' },
-            { label: 'One-Third & Two-Thirds', value: 'oneThirdTwoThirds' },
+          type: 'row',
+          fields: [
+            {
+              name: 'layout',
+              type: 'select',
+              defaultValue: 'oneColumn',
+              options: [
+                { label: 'One Column', value: 'oneColumn' },
+                { label: 'Two Columns', value: 'twoColumns' },
+                { label: 'Two-Thirds & One-Third', value: 'twoThirdsOneThird' },
+                { label: 'One-Third & Two-Thirds', value: 'oneThirdTwoThirds' },
+              ],
+              admin: {
+                width: '50%',
+              },
+            },
+            {
+              name: 'centerColumns',
+              type: 'checkbox',
+              admin: {
+                condition: (_, siblingData) => siblingData.layout !== 'oneColumn',
+                style: {
+                  alignSelf: 'flex-end',
+                },
+              },
+            },
           ],
         },
         // First Column

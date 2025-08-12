@@ -2,10 +2,12 @@ import type { Article, Page } from '@/payload-types';
 
 import { TopicsGrid } from './blocks/TopicsGrid';
 import { LatestArticles } from './blocks/LatestArticles';
+import { ContentBlock } from './blocks/Content';
 
 const blockComponents = {
   topicsGrid: TopicsGrid,
   latestArticles: LatestArticles,
+  content: ContentBlock,
 };
 
 export async function RenderBlocks({ blocks }: { blocks: Page['content'] | Article['content'] }) {

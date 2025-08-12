@@ -174,6 +174,7 @@ export interface Content {
       [k: string]: unknown;
     } | null;
     layout?: ('oneColumn' | 'twoColumns' | 'twoThirdsOneThird' | 'oneThirdTwoThirds') | null;
+    centerColumns?: boolean | null;
     columnOne: {
       root: {
         type: string;

@@ -7,9 +7,16 @@ type Props = {
   asLink?: boolean;
   isLarge?: boolean;
   show?: boolean;
+  variant?: 'default' | 'light';
 };
 
-export function TopicBadge({ topic, asLink = true, isLarge = false, show = true }: Props) {
+export function TopicBadge({
+  topic,
+  asLink = true,
+  isLarge = false,
+  show = true,
+  variant = 'default',
+}: Props) {
   if (!topic || !show) return null;
 
   const { slug, title } = topic;
@@ -18,8 +25,9 @@ export function TopicBadge({ topic, asLink = true, isLarge = false, show = true 
   return (
     <div
       className={cn(
-        'rounded-md inline-block font-semibold bg-muted hover:bg-border',
+        'rounded-md inline-block font-semibold',
         isLarge ? 'px-3 py-1 text-md' : 'px-2 py-1 text-xs',
+        variant == 'light' ? 'bg-white hover:bg-gray-300' : 'bg-muted hover:bg-border',
       )}
     >
       {asLink ? (
