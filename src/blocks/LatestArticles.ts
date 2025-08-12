@@ -37,6 +37,7 @@ export const LatestArticles: Block = {
           name: 'articlesToExclude',
           type: 'relationship',
           relationTo: 'articles',
+          hasMany: true,
           admin: {
             description: "Select any articles that you don't want to show",
           },

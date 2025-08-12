@@ -8,7 +8,7 @@ const blockComponents = {
   latestArticles: LatestArticles,
 };
 
-export function RenderBlocks({ blocks }: { blocks: Page['content'] | Article['content'] }) {
+export async function RenderBlocks({ blocks }: { blocks: Page['content'] | Article['content'] }) {
   const hasBlocks = blocks && Array.isArray(blocks) && blocks.length > 0;
 
   if (hasBlocks) {

@@ -1,24 +1,65 @@
-'use client';
-import type { LatestArticles as LatestArticlesType } from '@/payload-types';
-import { useEffect } from 'react';
+import type { Article, LatestArticles as LatestArticlesType } from '@/payload-types';
+import { BlockWrapper } from '../BlockWrapper';
+import Link from 'next/link';
+import { ArrowRight } from 'lucide-react';
+import { fetchArticles } from '@/app/_data/articles';
+import { ArticleGrid } from '../ArticlesGrid';
+import { RichText } from '../RichText';
 
 type Props = {
   latestArticlesBlockFields: LatestArticlesType['latestArticlesBlockFields'];
 };
 
-export function LatestArticles(props: Props) {
-  const { settings, padding, sectionHeading, articlesToExclude, displayShowAllLink } =
-    props.latestArticlesBlockFields;
+export async function LatestArticles(props: Props) {
+  const {
+    settings,
+    padding,
+    sectionHeading,
+    articlesToExclude,
+    displayShowAllLink,
+    useLeadingContent,
+    leadingContent,
+  } = props.latestArticlesBlockFields;
 
-  useEffect(() => {
-    async function fetchArticles() {
-      const res = await fetch('/api/articles?limit=3');
-      const data = await res.json();
-      console.log(data);
-    }
+  const excludedArticles = articlesToExclude
+    ? articlesToExclude
+        .filter(
+          (article): article is Article =>
+            typeof article === 'object' &&
+            article !== null &&
+            'id' in article &&
+            typeof article.id === 'string',
+        )
+        .map((article) => article.id)
+    : undefined;
 
-    fetchArticles();
-  }, []);
+  const articles = await fetchArticles({ limit: 3, excludeId: excludedArticles });
 
-  return <>LATEST ARTICLES BLOCK</>;
+  return (
+    <BlockWrapper settings={settings} padding={padding}>
+      <div className="flex items-end justify-between">
+        <h2 className="font-semibold text-3xl">{sectionHeading}</h2>
+        {displayShowAllLink ? (
+          <Link
+            href="/articles"
+            className="hidden md:flex items-center gap-1 text-danger-dark font-semibold uppercase hover:underline"
+          >
+            See All Articles <ArrowRight className="size-5" />
+          </Link>
+        ) : null}
+      </div>
+      {useLeadingContent ? <RichText data={leadingContent!} /> : null}
+      <ArticleGrid articles={articles.docs} />
+      {displayShowAllLink ? (
+        <div className="flex md:hidden items-center justify-center py-4">
+          <Link
+            href="/articles"
+            className="flex items-center gap-1 text-danger-dark font-semibold uppercase hover:underline"
+          >
+            See All Articles <ArrowRight className="size-5" />
+          </Link>
+        </div>
+      ) : null}
+    </BlockWrapper>
+  );
 }

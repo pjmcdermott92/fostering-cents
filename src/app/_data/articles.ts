@@ -1,8 +1,7 @@
-import type { Article } from '@/payload-types';
-import config from '@payload-config';
-import { getPayload } from 'payload';
-import { draftMode } from 'next/headers';
 import { ARCHIVE_PER_PAGE_LIMIT } from '@/lib/constants';
+import config from '@payload-config';
+import { draftMode } from 'next/headers';
+import { getPayload } from 'payload';
 
 const minimalSelect = {
   title: true,

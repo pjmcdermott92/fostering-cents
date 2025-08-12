@@ -28,6 +28,7 @@ export const backgroundFields: Field = {
       label: 'Background Type',
       type: 'select',
       defaultValue: 'transparent',
+      required: true,
       options: [
         { label: 'Transparent', value: 'transparent' },
         { label: 'Solid Color', value: 'solid' },

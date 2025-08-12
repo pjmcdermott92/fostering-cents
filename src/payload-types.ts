@@ -143,8 +143,8 @@ export interface UserAuthOperations {
  */
 export interface Content {
   contentFields: {
-    settings?: {
-      bgType?: ('transparent' | 'solid' | 'image') | null;
+    settings: {
+      bgType: 'transparent' | 'solid' | 'image';
       /**
        * Choose a fall-back color for background image
        */
@@ -259,8 +259,8 @@ export interface BlogContent {
  */
 export interface LatestArticles {
   latestArticlesBlockFields: {
-    settings?: {
-      bgType?: ('transparent' | 'solid' | 'image') | null;
+    settings: {
+      bgType: 'transparent' | 'solid' | 'image';
       /**
        * Choose a fall-back color for background image
        */
@@ -294,7 +294,7 @@ export interface LatestArticles {
     /**
      * Select any articles that you don't want to show
      */
-    articlesToExclude?: (string | null) | Article;
+    articlesToExclude?: (string | Article)[] | null;
   };
   id?: string | null;
   blockName?: string | null;
@@ -315,6 +315,7 @@ export interface Article {
   tags?: string[] | null;
   excerpt: string;
   content: (BlogContent | ReusableContentBlock)[];
+  publishedAt?: string | null;
   slug?: string | null;
   /**
    * Set this if the original version of the article is published elsewhere.
@@ -360,8 +361,8 @@ export interface Topic {
  */
 export interface ReusableContentBlock {
   reusableContentBlockFields: {
-    settings?: {
-      bgType?: ('transparent' | 'solid' | 'image') | null;
+    settings: {
+      bgType: 'transparent' | 'solid' | 'image';
       /**
        * Choose a fall-back color for background image
        */
@@ -598,6 +599,7 @@ export interface ArticlesSelect<T extends boolean = true> {
   tags?: T;
   excerpt?: T;
   content?: T | {};
+  publishedAt?: T;
   slug?: T;
   canonicalUrl?: T;
   authorType?: T;

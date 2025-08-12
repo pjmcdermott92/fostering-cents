@@ -1,7 +1,6 @@
 import { isAdmin } from '@/access/isAdmin';
 import { publishedOnly } from '@/access/publishedOnly';
 import { canonicalFields } from '@/fields/canonical';
-import { richText } from '@/fields/richText';
 import { slugField } from '@/fields/slug';
 import type { CollectionConfig } from 'payload';
 import { categoryAfterChange } from './hooks/field-hooks';
@@ -68,6 +67,26 @@ export const Articles: CollectionConfig = {
       required: true,
     },
     // SIDEBAR
+    {
+      name: 'publishedAt',
+      type: 'date',
+      admin: {
+        date: {
+          pickerAppearance: 'dayAndTime',
+        },
+        position: 'sidebar',
+      },
+      hooks: {
+        beforeChange: [
+          ({ siblingData, value }) => {
+            if (siblingData._status === 'published' && !value) {
+              return new Date();
+            }
+            return value;
+          },
+        ],
+      },
+    },
     slugField(),
     ...canonicalFields,
     {
