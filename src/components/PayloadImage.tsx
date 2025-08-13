@@ -1,33 +1,53 @@
 import { cn } from '@/lib/utils';
 import type { Media } from '@/payload-types';
 import type { DefaultTypedEditorState } from '@payloadcms/richtext-lexical';
-import { AspectRatio } from '@radix-ui/react-aspect-ratio';
 import Image from 'next/image';
+import { RichText } from './RichText';
 
-type ImageRatios = 'video' | 'square' | 'vertical';
 type Props = {
-  image?: (string | null) | Media;
+  image?: string | Media | null;
   caption?: DefaultTypedEditorState | null;
-  imageSize?: ImageRatios;
+  className?: string;
+  objectFit?: 'cover' | 'contain' | 'fill' | 'none' | 'scale-down';
+  sizes?: string;
+  priority?: boolean;
+  isEager?: boolean;
 };
 
-const ratio: Record<ImageRatios, number> = {
-  video: 16 / 9,
-  square: 1 / 1,
-  vertical: 9 / 16,
-};
+export function PayloadImage({
+  image,
+  caption,
+  className,
+  objectFit = 'cover',
+  priority = false,
+  sizes = '100vw',
+  isEager = false,
+}: Props) {
+  const url = typeof image === 'string' ? image : (image?.url ?? null);
+  const alt = typeof image === 'string' ? '' : (image?.alt ?? '');
 
-export function PayloadImage(props: Props) {
-  const { image, imageSize, caption } = props;
-  if (!image || !imageSize) return null;
+  const hasCaption = (caption?.root?.children?.length ?? 0) > 0;
 
-  // @TODO: NEED TO GET THIS FIXED!
+  if (!url) return null;
 
   return (
-    <div className={cn(`flex-1`)}>
-      <AspectRatio ratio={ratio[imageSize]}>
-        <Image src={image.url} alt="" width={image.width} height={image.height} />
-      </AspectRatio>
+    <div className={cn('w-full h-full flex flex-col', className)}>
+      <div className="flex-1 relative">
+        <Image
+          src={url}
+          alt={alt}
+          fill
+          style={{ objectFit }}
+          priority={priority}
+          sizes={sizes}
+          loading={isEager ? 'eager' : 'lazy'}
+        />
+      </div>
+      {hasCaption && (
+        <div className="relative text-center">
+          <RichText data={caption!} className="!text-sm !text-gray-400" />
+        </div>
+      )}
     </div>
   );
 }

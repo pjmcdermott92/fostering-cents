@@ -280,7 +280,6 @@ export interface AccentBlock {
     imagePosition: 'none' | 'right' | 'left' | 'floatRight' | 'floatLeft';
     mediaFields?: {
       image?: (string | null) | Media;
-      imageSize: 'video' | 'square' | 'vertical';
       caption?: {
         root: {
           type: string;
