@@ -50,6 +50,7 @@
   --color-danger-dark: oklch(0.65 0.15 25);
   --color-accent-light: oklch(96% 0.03 100);
   --color-info: oklch(94% 0.04 230);
+  --color-charcoal: #333333;
 
   --text-hero-xl: 85px;
   --text-hero-xl--line-height: 1.05;

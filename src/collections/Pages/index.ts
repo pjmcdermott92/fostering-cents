@@ -76,6 +76,7 @@ export const Pages: CollectionConfig = {
                 'latestArticles',
                 'popularArticles',
                 'topicsGrid',
+                'newsletterForm',
               ],
             },
           ],

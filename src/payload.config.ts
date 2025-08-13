@@ -30,6 +30,7 @@ import { MainNavigation } from './globals/MainNavigation';
 import { TopicsGrid } from './blocks/TopicsGrid';
 import { AccentBlock } from './blocks/AccentBlock';
 import { PopularArticles } from './blocks/PopularArticles';
+import { NewsletterForm } from './blocks/NewsletterForm';
 
 const filename = fileURLToPath(import.meta.url);
 const dirname = path.dirname(filename);
@@ -49,6 +50,7 @@ export default buildConfig({
     PopularArticles,
     ReusableContentBlock,
     TopicsGrid,
+    NewsletterForm,
   ],
   collections: [Articles, Pages, Topics, Users, Media, ReusableContent],
   globals: [MainNavigation, FooterLinks],

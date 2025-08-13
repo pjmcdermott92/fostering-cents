@@ -18,8 +18,6 @@ export async function PopularArticles({ popularArticlesBlockFields }: Props) {
 
   const articles = await fetchPopularArticles({ limit: Number(limit), categoryId: topicId });
 
-  console.log(articles);
-
   return (
     <BlockWrapper settings={settings} padding={padding}>
       <div className="flex items-end justify-between">
