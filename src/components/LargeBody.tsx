@@ -14,7 +14,7 @@ export function LargeBody({ children, format = 'left', direction }: LargeBodyPro
     }[format] || 'text-left';
 
   return (
-    <p className={`text-2xl md:text-4xl ${alignClass}`} dir={direction || undefined}>
+    <p className={`text-2xl ${alignClass}`} dir={direction || undefined}>
       {children}
     </p>
   );

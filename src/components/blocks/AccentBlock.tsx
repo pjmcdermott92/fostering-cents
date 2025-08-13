@@ -38,8 +38,17 @@ const floatPositionClasses: Record<ImagePositionOptions, string> = {
 };
 
 export function AccentBlock({ accentBlockFields }: Props) {
-  const { settings, padding, bgColor, heading, links, richText, imagePosition, mediaFields } =
-    accentBlockFields;
+  const {
+    settings,
+    padding,
+    bgColor,
+    heading,
+    links,
+    richText,
+    imagePosition,
+    mediaFields,
+    centerImage,
+  } = accentBlockFields;
 
   const hasImage = imagePosition !== 'none';
 
@@ -51,6 +60,7 @@ export function AccentBlock({ accentBlockFields }: Props) {
           imageFlexDirection[imagePosition],
           imagePosition.includes('float') && 'lg:mt-14',
           bgColorClasses[bgColor],
+          centerImage && ['left', 'right'].includes(imagePosition) && 'items-center',
         )}
       >
         <div className={cn('p-2 md:p-6 space-y-5', hasImage && 'md:w-2/3')}>
@@ -73,7 +83,7 @@ export function AccentBlock({ accentBlockFields }: Props) {
         {hasImage && (
           <div
             className={cn(
-              'h-[250px] md:h-[368px] md:w-[407px] flex items-center justify-center',
+              'h-[250px] md:h-[368px] md:w-[407px] w-full flex items-center justify-center',
               floatPositionClasses[imagePosition],
             )}
           >

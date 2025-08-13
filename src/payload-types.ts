@@ -280,6 +280,7 @@ export interface AccentBlock {
     bgColor: 'warning' | 'info' | 'danger' | 'success' | 'accent';
     heading: string;
     imagePosition: 'none' | 'right' | 'left' | 'floatRight' | 'floatLeft';
+    centerImage?: boolean | null;
     mediaFields?: {
       image?: (string | null) | Media;
       caption?: {

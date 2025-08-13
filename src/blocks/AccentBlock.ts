@@ -29,17 +29,37 @@ export const AccentBlock: Block = {
           required: true,
         },
         {
-          name: 'imagePosition',
-          label: 'Accent Image Position',
-          type: 'select',
-          required: true,
-          defaultValue: 'right',
-          options: [
-            { label: 'No Image', value: 'none' },
-            { label: 'Right of Content', value: 'right' },
-            { label: 'Left of Content', value: 'left' },
-            { label: 'Floating Right of Content', value: 'floatRight' },
-            { label: 'Floating Left of Content', value: 'floatLeft' },
+          type: 'row',
+          fields: [
+            {
+              name: 'imagePosition',
+              label: 'Accent Image Position',
+              type: 'select',
+              required: true,
+              defaultValue: 'right',
+              options: [
+                { label: 'No Image', value: 'none' },
+                { label: 'Right of Content', value: 'right' },
+                { label: 'Left of Content', value: 'left' },
+                { label: 'Floating Right of Content', value: 'floatRight' },
+                { label: 'Floating Left of Content', value: 'floatLeft' },
+              ],
+              admin: {
+                width: '50%',
+              },
+            },
+            {
+              type: 'checkbox',
+              name: 'centerImage',
+              admin: {
+                width: '50%',
+                style: {
+                  alignSelf: 'flex-end',
+                },
+                condition: (_, siblingData) =>
+                  ['left', 'right'].includes(siblingData.imagePosition),
+              },
+            },
           ],
         },
         mediaFields({
