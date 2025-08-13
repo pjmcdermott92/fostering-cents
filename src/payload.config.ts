@@ -1,4 +1,3 @@
-// storage-adapter-import-placeholder
 import { mongooseAdapter } from '@payloadcms/db-mongodb';
 import {
   BlocksFeature,
@@ -30,6 +29,7 @@ import { FooterLinks } from './globals/FooterLinks';
 import { MainNavigation } from './globals/MainNavigation';
 import { TopicsGrid } from './blocks/TopicsGrid';
 import { AccentBlock } from './blocks/AccentBlock';
+import { PopularArticles } from './blocks/PopularArticles';
 
 const filename = fileURLToPath(import.meta.url);
 const dirname = path.dirname(filename);
@@ -41,7 +41,15 @@ export default buildConfig({
       baseDir: path.resolve(dirname),
     },
   },
-  blocks: [Content, BlogContent, AccentBlock, LatestArticles, ReusableContentBlock, TopicsGrid],
+  blocks: [
+    Content,
+    BlogContent,
+    AccentBlock,
+    LatestArticles,
+    PopularArticles,
+    ReusableContentBlock,
+    TopicsGrid,
+  ],
   collections: [Articles, Pages, Topics, Users, Media, ReusableContent],
   globals: [MainNavigation, FooterLinks],
   editor: lexicalEditor({

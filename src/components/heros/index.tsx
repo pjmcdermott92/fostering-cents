@@ -1,9 +1,10 @@
 import type { Page } from '@/payload-types';
 import { HomeHero } from './HomeHero';
+import { DefaultHero } from './DefaultHero';
 
 const heros = {
   home: HomeHero,
-  default: () => null,
+  default: DefaultHero,
 };
 
 export async function RenderHero(props: Page['hero']) {

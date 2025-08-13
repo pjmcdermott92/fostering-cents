@@ -40,26 +40,29 @@ export async function LatestArticles(props: Props) {
       <div className="flex items-end justify-between">
         <h2 className="font-semibold text-3xl">{sectionHeading}</h2>
         {displayShowAllLink ? (
-          <Link
-            href="/articles"
-            className="hidden md:flex items-center gap-1 text-danger-dark font-semibold uppercase hover:underline"
-          >
-            See All Articles <ArrowRight className="size-5" />
-          </Link>
+          <div className="hidden md:flex justify-end">
+            <ShowAllArticlesLink />
+          </div>
         ) : null}
       </div>
       {useLeadingContent ? <RichText data={leadingContent!} /> : null}
       <ArticleGrid articles={articles.docs} />
       {displayShowAllLink ? (
         <div className="flex md:hidden items-center justify-center py-4">
-          <Link
-            href="/articles"
-            className="flex items-center gap-1 text-danger-dark font-semibold uppercase hover:underline"
-          >
-            See All Articles <ArrowRight className="size-5" />
-          </Link>
+          <ShowAllArticlesLink />
         </div>
       ) : null}
     </BlockWrapper>
+  );
+}
+
+function ShowAllArticlesLink({ className }: { className?: string }) {
+  return (
+    <Link
+      href="/articles"
+      className={`${className} items-center gap-1 text-danger-dark font-semibold uppercase hover:underline flex`}
+    >
+      See All Articles <ArrowRight className="size-5" />
+    </Link>
   );
 }

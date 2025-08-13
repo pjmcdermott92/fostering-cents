@@ -13,7 +13,7 @@ type ColumnProps = {
 type Props = {} & Extract<Page['content'], { blockType: 'content' }>;
 
 const colSizes: Record<ColumnSize, string> = {
-  full: 'col-spn-4 md:col-span-12',
+  full: 'col-span-4 md:col-span-12',
   half: 'cols-span-4 md:col-span-6',
   third: 'col-span-4',
   twoThirds: 'col-span-4 md: col-span-8',

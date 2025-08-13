@@ -4,10 +4,12 @@ import { TopicsGrid } from './blocks/TopicsGrid';
 import { LatestArticles } from './blocks/LatestArticles';
 import { ContentBlock } from './blocks/Content';
 import { AccentBlock } from './blocks/AccentBlock';
+import { PopularArticles } from './blocks/PopularArticles';
 
 const blockComponents = {
   topicsGrid: TopicsGrid,
   latestArticles: LatestArticles,
+  popularArticles: PopularArticles,
   content: ContentBlock,
   accentBlock: AccentBlock,
 };

@@ -59,3 +59,51 @@ export async function fetchArticles({
 
   return result;
 }
+
+type FetchPopularArticlesOptions = {
+  limit?: number;
+  categoryId?: string;
+};
+
+export async function fetchPopularArticles({
+  limit = ARCHIVE_PER_PAGE_LIMIT,
+  categoryId,
+}: FetchPopularArticlesOptions = {}) {
+  const { isEnabled: draft } = await draftMode();
+  const payload = await getPayload({ config });
+  const currentDate = new Date();
+
+  const conditions: any[] = [
+    { publishedAt: { less_than_equal: currentDate } },
+    { hideInPopular: { not_equals: true } },
+  ];
+
+  if (!draft) {
+    conditions.push({ _status: { equals: 'published' } });
+  }
+
+  if (categoryId) {
+    conditions.push({ topic: { equals: categoryId } });
+  }
+
+  const result = await payload.find({
+    collection: 'articles',
+    depth: 1,
+    select: minimalSelect,
+    where: {
+      and: conditions,
+    },
+    sort: '-publishedAt',
+  });
+
+  const shuffledDocs = result.docs
+    .map((value) => ({ value, sortKey: Math.random() }))
+    .sort((a, b) => a.sortKey - b.sortKey)
+    .map(({ value }) => value)
+    .slice(0, limit);
+
+  return {
+    ...result,
+    docs: shuffledDocs,
+  };
+}

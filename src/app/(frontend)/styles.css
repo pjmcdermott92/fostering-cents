@@ -52,16 +52,16 @@
   --color-info: oklch(94% 0.04 230);
 
   --text-hero-xl: 85px;
-  --text-hero-xl--line-height: 1.25;
-  --text-her-xl--font-weight: 700;
+  --text-hero-xl--line-height: 1.05;
+  --text-hero-xl--font-weight: 500;
 
   --text-hero-md: 53px;
-  --text-hero-md--line-height: 1.25;
-  --text-her-md--font-weight: 700;
+  --text-hero-md--line-height: 1.05;
+  --text-hero-md--font-weight: 500;
 
   --text-hero-sm: 32px;
-  --text-hero-sm--line-height: 1.25;
-  --text-her-sm--font-weight: 700;
+  --text-hero-sm--line-height: 1.05;
+  --text-hero-sm--font-weight: 500;
 }
 
 :root {
@@ -133,5 +133,19 @@
 
   .richText a {
     @apply text-primary underline hover:no-underline;
+  }
+
+  .richText.unstyled-links a {
+    @apply text-current underline hover:no-underline;
+  }
+
+  .rich-text h1 {
+    @apply font-bold text-3xl lg:text-4xl;
+  }
+  .richText h2 {
+    @apply font-bold text-2xl lg:text-3xl;
+  }
+  .richText h3 {
+    @apply font-bold text-xl lg:text-2xl;
   }
 }

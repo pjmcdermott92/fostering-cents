@@ -70,6 +70,7 @@ export interface Config {
     blogContent: BlogContent;
     accentBlock: AccentBlock;
     latestArticles: LatestArticles;
+    popularArticles: PopularArticles;
     reusableContentBlock: ReusableContentBlock;
     topicsGrid: TopicsGrid;
   };
@@ -414,7 +415,7 @@ export interface Page {
       [k: string]: unknown;
     } | null;
   };
-  content?: (Content | AccentBlock | LatestArticles | TopicsGrid)[] | null;
+  content?: (Content | AccentBlock | LatestArticles | PopularArticles | TopicsGrid)[] | null;
   updatedAt: string;
   createdAt: string;
   _status?: ('draft' | 'published') | null;
@@ -448,6 +449,10 @@ export interface Article {
    */
   authorUrl?: string | null;
   relatedArticles?: (string | Article)[] | null;
+  /**
+   * Check this to exclude this post from the 'Popular Posts' block
+   */
+  hideInPopular?: boolean | null;
   updatedAt: string;
   createdAt: string;
   _status?: ('draft' | 'published') | null;
@@ -593,6 +598,37 @@ export interface LatestArticles {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "popularArticles".
+ */
+export interface PopularArticles {
+  popularArticlesBlockFields: {
+    settings: {
+      bgType: 'transparent' | 'solid' | 'image';
+      /**
+       * Choose a fall-back color for background image
+       */
+      bgColor?: ('primary' | 'accentLight' | 'accentDark') | null;
+      bgImage?: (string | null) | Media;
+      containerWidth?: ('normal' | 'narrow' | 'wide') | null;
+      theme?: ('light' | 'dark') | null;
+    };
+    padding: {
+      top: 'hero' | 'large' | 'small' | 'extraLarge' | 'underlay';
+      bottom: 'hero' | 'large' | 'small' | 'extraLarge';
+    };
+    title: string;
+    limit: '3' | '6' | '9' | '12';
+    /**
+     * Optional. Leave blank to show popular articled from all categories.
+     */
+    topic?: (string | null) | Topic;
+  };
+  id?: string | null;
+  blockName?: string | null;
+  blockType: 'popularArticles';
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "topicsGrid".
  */
 export interface TopicsGrid {
@@ -694,6 +730,7 @@ export interface ArticlesSelect<T extends boolean = true> {
   guestAuthor?: T;
   authorUrl?: T;
   relatedArticles?: T;
+  hideInPopular?: T;
   updatedAt?: T;
   createdAt?: T;
   _status?: T;

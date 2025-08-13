@@ -141,6 +141,16 @@ export const Articles: CollectionConfig = {
         position: 'sidebar',
       },
     },
+    {
+      name: 'hideInPopular',
+      type: 'checkbox',
+      defaultValue: false,
+      label: 'Hide in Popular Algorithm',
+      admin: {
+        position: 'sidebar',
+        description: "Check this to exclude this post from the 'Popular Posts' block",
+      },
+    },
   ],
   hooks: {
     afterChange: [revalidateAfterChange],
