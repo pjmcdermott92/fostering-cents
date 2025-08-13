@@ -2,7 +2,7 @@ import Link from 'next/link';
 import { Button } from './ui/button';
 import { generateCmsLinkHref, type LinkType, type Reference } from '@/lib/utils/generateCmsLinkUrl';
 
-type LinkAppearance = 'default' | 'primary' | 'secondary' | null;
+type LinkAppearance = 'default' | 'primary' | 'secondary' | null | unknown;
 export type CMSLinkType = {
   appearance?: LinkAppearance;
   customId?: string | null;

@@ -39,7 +39,7 @@ export const PopularArticles: Block = {
               relationTo: 'topics',
               admin: {
                 width: '50%',
-                description: 'Optional. Leave blank to show popular articled from all categories.',
+                description: 'Optional. Leave blank to show popular articles from all categories.',
               },
             },
           ],

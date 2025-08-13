@@ -52,7 +52,7 @@
   --color-info: oklch(94% 0.04 230);
   --color-charcoal: #333333;
 
-  --text-hero-xl: 85px;
+  --text-hero-xl: 75px;
   --text-hero-xl--line-height: 1.05;
   --text-hero-xl--font-weight: 500;
 
@@ -124,7 +124,8 @@
     @apply font-bold text-xl lg:text-2xl;
   }
 
-  .text-hero {
+  .text-hero,
+  .richText .text-hero {
     @apply text-hero-sm sm:text-hero-md md:text-hero-xl;
   }
 
@@ -140,7 +141,7 @@
     @apply text-current underline hover:no-underline;
   }
 
-  .rich-text h1 {
+  .richText h1 {
     @apply font-bold text-3xl lg:text-4xl;
   }
   .richText h2 {
@@ -148,5 +149,14 @@
   }
   .richText h3 {
     @apply font-bold text-xl lg:text-2xl;
+  }
+  .richText h4 {
+    @apply font-bold text-lg lg:text-xl;
+  }
+  .richText ul {
+    @apply list-disc ms-8 space-y-2;
+  }
+  .richText ol {
+    @apply list-decimal ms-8 space-y-2;
   }
 }

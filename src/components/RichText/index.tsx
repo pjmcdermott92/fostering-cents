@@ -20,6 +20,8 @@ import type { SerializedHeroHeadingNode } from '@/fields/richText/features/heroT
 
 import { LargeBody } from '../LargeBody';
 import { HeroHeading } from '../HeroHeading';
+import { CMSLink } from '../CMSLink';
+import { Reference } from '@/lib/utils/generateCmsLinkUrl';
 
 type NodeTypes = DefaultNodeTypes | SerializedLargeBodyNode | SerializedHeroHeadingNode;
 
@@ -58,6 +60,21 @@ const jsxConverters: JSXConvertersFunction<NodeTypes> = ({ defaultConverters }) 
       <HeroHeading format={node.format} direction={node.direction}>
         {nodesToJSX({ nodes: node.children })}
       </HeroHeading>
+    );
+  },
+  link: ({ node, nodesToJSX }) => {
+    const fields = node.fields;
+
+    return (
+      <CMSLink
+        newTab={Boolean(fields?.newTab)}
+        reference={fields.doc as Reference}
+        type={fields.linkType === 'internal' ? 'reference' : 'custom'}
+        url={fields.url}
+        appearance={fields.appearance || undefined}
+      >
+        {nodesToJSX({ nodes: node.children })}
+      </CMSLink>
     );
   },
 });

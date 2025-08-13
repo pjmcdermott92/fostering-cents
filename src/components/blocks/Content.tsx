@@ -1,8 +1,8 @@
+import { cn } from '@/lib/utils';
+import type { Page } from '@/payload-types';
+import { DefaultTypedEditorState } from '@payloadcms/richtext-lexical';
 import { BlockWrapper } from '../BlockWrapper';
 import { RichText } from '../RichText';
-import { cn } from '@/lib/utils';
-import { DefaultTypedEditorState } from '@payloadcms/richtext-lexical';
-import type { Page } from '@/payload-types';
 
 type ColumnSize = 'full' | 'half' | 'third' | 'twoThirds';
 type ColumnProps = {
@@ -23,11 +23,18 @@ export function ContentBlock({ contentFields }: Props) {
   const { settings, padding, useLeadingContent, leadingContent, centerColumns } = contentFields;
   const columns = getColumnsByLayout(contentFields);
 
+  // @ts-expect-error: TS can't infer settings.theme properly due to complex union types
+  const isDarkTheme = settings?.theme === 'dark';
+
   return (
     <BlockWrapper settings={settings} padding={padding}>
       {useLeadingContent && <RichText data={leadingContent} />}
       <div
-        className={cn('grid grid-cols-4 md:grid-cols-12 gap-6', centerColumns && 'items-center')}
+        className={cn(
+          'grid grid-cols-4 md:grid-cols-12 gap-6',
+          centerColumns && 'items-center',
+          isDarkTheme && 'text-white',
+        )}
       >
         {columns.map((column, idx) => (
           <div key={idx} className={cn(colSizes[column.size])}>

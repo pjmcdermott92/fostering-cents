@@ -54,7 +54,7 @@ export async function PopularArticles({ popularArticlesBlockFields }: Props) {
 function ShowAllArticlesLink({
   className,
   href,
-  label = 'Show All Articles',
+  label = 'See All Articles',
 }: {
   className?: string;
   href: string;

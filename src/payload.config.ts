@@ -31,6 +31,7 @@ import { TopicsGrid } from './blocks/TopicsGrid';
 import { AccentBlock } from './blocks/AccentBlock';
 import { PopularArticles } from './blocks/PopularArticles';
 import { NewsletterForm } from './blocks/NewsletterForm';
+import { ContentCards } from './blocks/ContentCards';
 
 const filename = fileURLToPath(import.meta.url);
 const dirname = path.dirname(filename);
@@ -44,6 +45,7 @@ export default buildConfig({
   },
   blocks: [
     Content,
+    ContentCards,
     BlogContent,
     AccentBlock,
     LatestArticles,
@@ -74,6 +76,15 @@ export default buildConfig({
                 return;
               },
             } as TextField,
+            {
+              name: 'appearance',
+              type: 'select',
+              defaultValue: 'default',
+              options: ['default', 'primary', 'secondary'],
+              admin: {
+                description: 'Choose how the lind should look',
+              },
+            },
           ];
         },
       }),

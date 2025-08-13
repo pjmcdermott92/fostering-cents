@@ -72,6 +72,7 @@ export const Pages: CollectionConfig = {
               blocks: [],
               blockReferences: [
                 'content',
+                'contentCards',
                 'accentBlock',
                 'latestArticles',
                 'popularArticles',

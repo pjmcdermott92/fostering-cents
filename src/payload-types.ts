@@ -67,6 +67,7 @@ export interface Config {
   };
   blocks: {
     content: Content;
+    contentCards: ContentCards;
     blogContent: BlogContent;
     accentBlock: AccentBlock;
     latestArticles: LatestArticles;
@@ -232,6 +233,68 @@ export interface Media {
   height?: number | null;
   focalX?: number | null;
   focalY?: number | null;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "contentCards".
+ */
+export interface ContentCards {
+  contentCardFields: {
+    settings: {
+      bgType: 'transparent' | 'solid' | 'image';
+      /**
+       * Choose a fall-back color for background image
+       */
+      bgColor?: ('primary' | 'accentLight' | 'accentDark') | null;
+      bgImage?: (string | null) | Media;
+      containerWidth?: ('normal' | 'narrow' | 'wide') | null;
+      theme?: ('light' | 'dark') | null;
+    };
+    padding: {
+      top: 'hero' | 'large' | 'small' | 'extraLarge' | 'underlay';
+      bottom: 'hero' | 'large' | 'small' | 'extraLarge';
+    };
+    position: 'cardsBelow' | 'sideBySide' | 'cardsOnly';
+    cardBg: 'transparent' | 'white';
+    content?: {
+      root: {
+        type: string;
+        children: {
+          type: string;
+          version: number;
+          [k: string]: unknown;
+        }[];
+        direction: ('ltr' | 'rtl') | null;
+        format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+        indent: number;
+        version: number;
+      };
+      [k: string]: unknown;
+    } | null;
+    cards?:
+      | {
+          content: {
+            root: {
+              type: string;
+              children: {
+                type: string;
+                version: number;
+                [k: string]: unknown;
+              }[];
+              direction: ('ltr' | 'rtl') | null;
+              format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+              indent: number;
+              version: number;
+            };
+            [k: string]: unknown;
+          };
+          id?: string | null;
+        }[]
+      | null;
+  };
+  id?: string | null;
+  blockName?: string | null;
+  blockType: 'contentCards';
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
@@ -417,7 +480,9 @@ export interface Page {
       [k: string]: unknown;
     } | null;
   };
-  content?: (Content | AccentBlock | LatestArticles | PopularArticles | TopicsGrid | NewsletterForm)[] | null;
+  content?:
+    | (Content | ContentCards | AccentBlock | LatestArticles | PopularArticles | TopicsGrid | NewsletterForm)[]
+    | null;
   updatedAt: string;
   createdAt: string;
   _status?: ('draft' | 'published') | null;
@@ -621,7 +686,7 @@ export interface PopularArticles {
     title: string;
     limit: '3' | '6' | '9' | '12';
     /**
-     * Optional. Leave blank to show popular articled from all categories.
+     * Optional. Leave blank to show popular articles from all categories.
      */
     topic?: (string | null) | Topic;
   };
