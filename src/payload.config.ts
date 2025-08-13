@@ -114,7 +114,6 @@ export default buildConfig({
           },
         },
       }),
-      // HeroHeadingFeature(),
       LargeBodyFeature(),
     ],
   }),
