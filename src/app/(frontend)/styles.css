@@ -159,4 +159,7 @@
   .richText ol {
     @apply list-decimal ms-8 space-y-2;
   }
+  .richText p {
+    @apply text-lg;
+  }
 }
