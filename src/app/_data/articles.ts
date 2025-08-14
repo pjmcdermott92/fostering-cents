@@ -1,3 +1,4 @@
+import { canonicalFields } from '@/fields/canonical';
 import { ARCHIVE_PER_PAGE_LIMIT } from '@/lib/constants';
 import type { Article } from '@/payload-types';
 import config from '@payload-config';
@@ -15,6 +16,8 @@ const minimalSelect = {
   excerpt: true,
   content: true,
   relatedArticles: true,
+  canonicalFields: true,
+  canonicalUrl: true,
 } as const;
 
 type GetPostOptions = {
@@ -166,6 +169,8 @@ export async function fetchSingleArticle(
       createdAt: true,
       updatedAt: true,
       excerpt: true,
+      canonicalUrl: true,
+      canonicalFields: true,
     },
     where: {
       and: whereClause,

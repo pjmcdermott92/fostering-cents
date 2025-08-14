@@ -76,7 +76,7 @@ type PopularArticleCardProps = {
 
 function PopularArticleCard({ article }: PopularArticleCardProps) {
   const { title, excerpt, slug, topic } = article;
-  const href = `/article/${slug}`;
+  const href = `/articles/${slug}`;
 
   return (
     <div className="bg-gray-100 p-4 rounded-md flex flex-col space-y-4">

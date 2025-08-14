@@ -42,7 +42,11 @@ export default async function ArticlesPage({ searchParams: SearchParamsPromise }
           <ArticleGrid articles={articles.docs} />
         </div>
         <Pagination resource={articles} />
-        <TopicsGrid topicsToShow={topics.docs} blockType="topicsGrid" sectionLabel="Topics" />
+        <TopicsGrid
+          topicsToShow={topics.docs}
+          blockType="topicsGrid"
+          sectionLabel="Browse by Topic"
+        />
         <NewsletterFormBlock
           blockType="newsletterForm"
           newsletterFormFields={{

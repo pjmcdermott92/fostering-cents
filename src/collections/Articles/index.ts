@@ -29,6 +29,8 @@ export const Articles: CollectionConfig = {
     publishedAt: true,
     author: true,
     authorType: true,
+    canonicalFields: true,
+    canonicalUrl: true,
     meta: {
       image: true,
       description: true,

@@ -49,7 +49,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
     ogImage = metaImage.url;
   }
 
-  return {
+  let metaData: Metadata = {
     title,
     description,
     openGraph: {
@@ -59,4 +59,15 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
       url,
     },
   };
+
+  const canonicalUrl = article?.canonicalUrl ? article?.canonicalUrl : null;
+  if (canonicalUrl)
+    metaData = {
+      ...metaData,
+      alternates: {
+        canonical: canonicalUrl,
+      },
+    };
+
+  return metaData;
 }

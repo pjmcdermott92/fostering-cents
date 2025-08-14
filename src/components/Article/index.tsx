@@ -6,6 +6,7 @@ import { PublishAndReadingTime } from '../PublishAndReadingTime';
 import { RenderBlocks } from '../RenderBlocks';
 import { TopicBadge } from '../TopicBadge';
 import { AuthorTag } from './AuthorTag';
+import { CanonicalCallout } from './CanonicalCallout';
 import { RelatedArticles } from './RelatedArticles';
 import { ShareButtons } from './ShareButtons';
 
@@ -14,7 +15,7 @@ type Props = {
 };
 
 export function Article({ article }: Props) {
-  const { featuredImage, title, topic, content, relatedArticles } = article;
+  const { featuredImage, title, topic, content, relatedArticles, canonicalUrl } = article;
   const relatedArticlesToShow = relatedArticles?.filter(
     (item): item is ArticleType => typeof item !== 'string',
   );
@@ -45,8 +46,9 @@ export function Article({ article }: Props) {
           </AspectRatio>
         </div>
       </BlockWrapper>
-      <BlockWrapper settings={{ containerWidth: 'narrow' }}>
+      <BlockWrapper settings={{ containerWidth: 'narrow' }} padding={{ bottom: 'hero' }}>
         <ShareButtons title={title} />
+        <CanonicalCallout url={canonicalUrl} />
       </BlockWrapper>
       <RenderBlocks blocks={content} />
       {relatedArticlesToShow?.length ? <RelatedArticles docs={relatedArticlesToShow} /> : null}

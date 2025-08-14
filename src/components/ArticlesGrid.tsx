@@ -12,7 +12,7 @@ export function ArticleGrid({
 }) {
   if (!articles || !articles.length) {
     return (
-      <p className="text-2xl">
+      <p className="text-2xl text-center">
         Hmm... It looks like we couldn&apos;t find any articles that matched your search.
       </p>
     );
