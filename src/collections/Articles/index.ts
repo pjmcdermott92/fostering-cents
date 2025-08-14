@@ -19,7 +19,21 @@ export const Articles: CollectionConfig = {
   admin: {
     useAsTitle: 'title',
   },
-  defaultPopulate: {},
+  defaultPopulate: {
+    title: true,
+    slug: true,
+    topic: true,
+    featuredImage: true,
+    excerpt: true,
+    content: true,
+    publishedAt: true,
+    author: true,
+    authorType: true,
+    meta: {
+      image: true,
+      description: true,
+    },
+  },
   fields: [
     {
       name: 'title',
@@ -136,9 +150,19 @@ export const Articles: CollectionConfig = {
       type: 'relationship',
       relationTo: 'articles',
       hasMany: true,
-      maxRows: 3,
       admin: {
         position: 'sidebar',
+      },
+      // Ensure current post is not available to select
+      filterOptions: ({ id }) => {
+        return {
+          id: {
+            not_in: [id],
+          },
+          _status: {
+            equals: 'published',
+          },
+        };
       },
     },
     {

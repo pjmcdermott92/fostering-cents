@@ -32,6 +32,7 @@ import { AccentBlock } from './blocks/AccentBlock';
 import { PopularArticles } from './blocks/PopularArticles';
 import { NewsletterForm } from './blocks/NewsletterForm';
 import { ContentCards } from './blocks/ContentCards';
+import { BannerBlock } from './blocks/Banner';
 
 const filename = fileURLToPath(import.meta.url);
 const dirname = path.dirname(filename);
@@ -60,7 +61,7 @@ export default buildConfig({
     features: ({ defaultFeatures }) => [
       ...defaultFeatures.filter((feature) => feature.key !== 'link'),
       BlocksFeature({
-        blocks: [],
+        blocks: [BannerBlock],
       }),
       FixedToolbarFeature(),
       LinkFeature({

@@ -7,6 +7,7 @@ import { AccentBlock } from './blocks/AccentBlock';
 import { PopularArticles } from './blocks/PopularArticles';
 import { NewsletterFormBlock } from './blocks/NewsletterForm';
 import { ContentCards } from './blocks/ContentCards';
+import { BlogContent } from './blocks/BlogContent';
 
 const blockComponents = {
   topicsGrid: TopicsGrid,
@@ -16,6 +17,7 @@ const blockComponents = {
   accentBlock: AccentBlock,
   newsletterForm: NewsletterFormBlock,
   contentCards: ContentCards,
+  blogContent: BlogContent,
 };
 
 export async function RenderBlocks({ blocks }: { blocks: Page['content'] | Article['content'] }) {

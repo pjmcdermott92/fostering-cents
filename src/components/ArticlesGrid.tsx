@@ -19,7 +19,7 @@ export function ArticleGrid({
   }
 
   return (
-    <div className="grid grid-cols-1 md:grid-cols-3 gap-4 my-3">
+    <div className="grid grid-cols-1 md:grid-cols-3 gap-6 my-3">
       {articles.map((article) => (
         <ArticleCard
           key={article.id}

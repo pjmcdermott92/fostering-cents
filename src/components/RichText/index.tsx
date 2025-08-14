@@ -17,13 +17,15 @@ import React from 'react';
 import type {} from '@/payload-types';
 import type { SerializedLargeBodyNode } from '@/fields/richText/features/largeBody/LargeBodyNode';
 import type { SerializedHeroHeadingNode } from '@/fields/richText/features/heroText/HeroHeadingNode';
+import type { BannerBlock as BannerBlockType } from '@/payload-types';
 
 import { LargeBody } from '../LargeBody';
 import { HeroHeading } from '../HeroHeading';
 import { CMSLink } from '../CMSLink';
 import { Reference } from '@/lib/utils/generateCmsLinkUrl';
+import { BannerBlock } from '../blocks/Banner';
 
-type NodeTypes = DefaultNodeTypes | SerializedLargeBodyNode | SerializedHeroHeadingNode;
+type NodeTypes = DefaultNodeTypes | SerializedBlockNode<BannerBlockType> | SerializedLargeBodyNode;
 
 const internalDocToHref = ({ linkNode }: { linkNode: SerializedLinkNode }) => {
   const { value, relationTo } = linkNode.fields.doc!;
@@ -45,7 +47,9 @@ const internalDocToHref = ({ linkNode }: { linkNode: SerializedLinkNode }) => {
 const jsxConverters: JSXConvertersFunction<NodeTypes> = ({ defaultConverters }) => ({
   ...defaultConverters,
   ...LinkJSXConverter({ internalDocToHref }),
-  blocks: {},
+  blocks: {
+    bannerBlock: ({ node }) => <BannerBlock {...node.fields} />,
+  },
   largeBody: ({ node, nodesToJSX }) => {
     return (
       // @ts-expect-error working on a fix
@@ -56,7 +60,6 @@ const jsxConverters: JSXConvertersFunction<NodeTypes> = ({ defaultConverters }) 
   },
   heroHeading: ({ node, nodesToJSX }) => {
     return (
-      // @ts-expect-error working on a fix
       <HeroHeading format={node.format} direction={node.direction}>
         {nodesToJSX({ nodes: node.children })}
       </HeroHeading>

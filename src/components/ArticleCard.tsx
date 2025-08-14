@@ -20,9 +20,14 @@ export function ArticleCard({ article, hidePublishDate, className, hideTopic }: 
   const href = `/articles/${slug}`;
 
   return (
-    <div className={cn('space-y-4 h-full flex flex-col', className)}>
+    <div
+      className={cn(
+        'space-y-4 h-full flex flex-col shadow bg-white border rounded overflow-hidden',
+        className,
+      )}
+    >
       <Link href={href}>
-        <AspectRatio ratio={16 / 9} className="rounded overflow-hidden">
+        <AspectRatio ratio={16 / 9} className="overflow-hidden">
           {typeof featuredImage == 'object' ? (
             <Image
               src={featuredImage!.url!}
@@ -35,14 +40,14 @@ export function ArticleCard({ article, hidePublishDate, className, hideTopic }: 
           )}
         </AspectRatio>
       </Link>
-      <div>
+      <div className="px-4">
         <TopicBadge show={!hideTopic} topic={topic as Topic} />
       </div>
-      <div>
+      <div className="px-4">
         <PublishAndReadingTime article={article} hidePublishDate={hidePublishDate} />
       </div>
 
-      <div className="flex-1 space-y-4">
+      <div className="flex-1 space-y-4 px-4">
         <h3 className="text-2xl">
           <Link href={href} className="hover:text-foreground-light">
             {title}
@@ -50,7 +55,7 @@ export function ArticleCard({ article, hidePublishDate, className, hideTopic }: 
         </h3>
         <p className="text-sm">{excerpt}</p>
       </div>
-      <div>
+      <div className="p-4">
         <Link href={href}>
           <Button>
             Read Article <ArrowRight className="size-5" />

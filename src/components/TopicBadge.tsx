@@ -27,7 +27,9 @@ export function TopicBadge({
       className={cn(
         'rounded-md inline-block font-semibold',
         isLarge ? 'px-3 py-1 text-md' : 'px-2 py-1 text-xs',
-        variant == 'light' ? 'bg-white hover:bg-gray-300' : 'bg-muted hover:bg-border',
+        variant == 'light'
+          ? 'bg-white hover:bg-gray-300'
+          : 'bg-muted hover:bg-border shadow-sm border',
       )}
     >
       {asLink ? (

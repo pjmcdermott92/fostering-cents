@@ -7,7 +7,7 @@ export function Footer(props: FooterType) {
   const { primaryNav, secondaryNav } = props;
 
   return (
-    <footer className="bg-gray-100 p-8 mt-8">
+    <footer className="bg-gray-100 p-8">
       <div className="max-w-7xl w-full mx-auto px-4">
         <div className="flex flex-col md:flex-row items-center justify-between gap-8">
           <Link href="/">

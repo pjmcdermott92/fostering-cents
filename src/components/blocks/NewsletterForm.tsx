@@ -1,9 +1,9 @@
-import { BlockWrapper } from '../BlockWrapper';
-import type { Page } from '@/payload-types';
-import { SubscribeForm } from '../SubscribeForm';
+import type { NewsletterForm } from '@/payload-types';
 import Image from 'next/image';
+import { BlockWrapper } from '../BlockWrapper';
+import { SubscribeForm } from '../SubscribeForm';
 
-type Props = Extract<Page['content'], { blockType: 'newsletterForm' }>;
+type Props = NewsletterForm;
 
 export function NewsletterFormBlock({ newsletterFormFields }: Props) {
   const { settings, padding } = newsletterFormFields;
