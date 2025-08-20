@@ -1,4 +1,3 @@
-import { canonicalFields } from '@/fields/canonical';
 import { ARCHIVE_PER_PAGE_LIMIT } from '@/lib/constants';
 import type { Article } from '@/payload-types';
 import config from '@payload-config';
