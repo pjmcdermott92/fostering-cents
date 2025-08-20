@@ -130,7 +130,7 @@
   }
 
   .richText {
-    @apply space-y-4;
+    @apply space-y-4 text-lg;
   }
 
   .richText a {
@@ -158,8 +158,5 @@
   }
   .richText ol {
     @apply list-decimal ms-8 space-y-2;
-  }
-  .richText p {
-    @apply text-lg;
   }
 }
