@@ -34,8 +34,6 @@ export default async function TopicsPage({ params, searchParams: searchParamsPro
 
   if (page > articles.totalPages) redirect(`/topics/${slug}`);
 
-  console.log(articles);
-
   return (
     <>
       <BlockWrapper padding={{ top: 'hero' }}>
