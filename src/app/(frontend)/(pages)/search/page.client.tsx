@@ -84,7 +84,16 @@ function SearchResultItem({ item }: SearchResultItemProps) {
             )}
           >
             <Link href={path}>
-              <Image src={image.url} alt={image.alt} fill />
+              {image && image.url ? (
+                <Image src={image.url} alt={image.alt} fill />
+              ) : (
+                <Image
+                  src="/logo-symbol-color.png"
+                  alt="Fostering Cents"
+                  width={100}
+                  height={100}
+                />
+              )}
             </Link>
           </div>
         </div>
