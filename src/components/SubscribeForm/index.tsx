@@ -78,11 +78,11 @@ export function SubscribeForm() {
       </form>
       <p className="text-xs">
         By submitting this form, you are agreeing to the Fostering Cents{' '}
-        <Link href="/" className="underline hover:no-underline">
+        <Link href="/policies/terms-of-use" className="underline hover:no-underline">
           Terms of Use
         </Link>{' '}
         and{' '}
-        <Link href="/" className="underline hover:no-underline">
+        <Link href="/policies/privacy" className="underline hover:no-underline">
           Privacy Policy
         </Link>
         .
