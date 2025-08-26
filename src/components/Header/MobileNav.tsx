@@ -3,13 +3,14 @@ import { MOBILE_NAV_SLUG } from '@/lib/constants';
 import { generateCmsLinkHref } from '@/lib/utils/generateCmsLinkUrl';
 import type { MainNavigation } from '@/payload-types';
 import { Modal, useModal } from '@faceless-ui/modal';
-import { ChevronsUpDown, Menu, Search, X } from 'lucide-react';
+import { ChevronsUpDown, Menu, X } from 'lucide-react';
 import Image from 'next/image';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import { useCallback, useEffect } from 'react';
 import { CMSLink } from '../CMSLink';
 import { Collapsible, CollapsibleContent, CollapsibleTrigger } from '../ui/collapsible';
+import { SearchDialog } from './SearchDialog';
 
 type MobileNavType = Pick<MainNavigation, 'navItems'>;
 
@@ -38,9 +39,7 @@ export function MobileNav({ navItems }: MobileNavType) {
       <Link href="/" className="relative w-[135px] h-[40px]">
         <Image src="/logo-full-color.webp" alt="Fostering Cents" fill sizes="135px" />
       </Link>
-      <button className="cursor-pointer">
-        <Search className="size-5" />
-      </button>
+      <SearchDialog />
       <MobileMenuModal navItems={navItems} />
     </div>
   );

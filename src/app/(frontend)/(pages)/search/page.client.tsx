@@ -1,5 +1,4 @@
 'use client';
-
 import { TopicBadge } from '@/components/TopicBadge';
 import { cn } from '@/lib/utils';
 import Image from 'next/image';
@@ -76,7 +75,7 @@ function SearchResultItem({ item }: SearchResultItemProps) {
   return (
     <>
       <div className="flex flex-col md:flex-row gap-1 text-current no-underline">
-        <div className="flex items-start justify-center flex-1">
+        <div className="flex md:justify-center items-start flex-1">
           <div
             className={cn(
               'aspect-video relative w-full overflow-hidden rounded-md',

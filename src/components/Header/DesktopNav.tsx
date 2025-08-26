@@ -1,7 +1,3 @@
-import type { MainNavigation } from '@/payload-types';
-import Link from 'next/link';
-import Image from 'next/image';
-import { generateCmsLinkHref } from '@/lib/utils/generateCmsLinkUrl';
 import {
   NavigationMenu,
   NavigationMenuContent,
@@ -10,7 +6,11 @@ import {
   NavigationMenuList,
   NavigationMenuTrigger,
 } from '@/components/ui/navigation-menu';
-import { Search } from 'lucide-react';
+import { generateCmsLinkHref } from '@/lib/utils/generateCmsLinkUrl';
+import type { MainNavigation } from '@/payload-types';
+import Image from 'next/image';
+import Link from 'next/link';
+import { SearchDialog } from './SearchDialog';
 
 type DesktopNavType = Pick<MainNavigation, 'navItems'>;
 
@@ -75,9 +75,7 @@ export function DesktopNav({ navItems }: DesktopNavType) {
         ) : null}
       </div>
       <div>
-        <button className="cursor-pointer">
-          <Search className="size-5" />
-        </button>
+        <SearchDialog />
       </div>
     </div>
   );
